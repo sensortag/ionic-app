@@ -2,5 +2,7 @@
   "name": "sensortag",
   "app_id": "6db38eb9",
   "type": "ionic-angular",
-  "integrations": {}
+  "integrations": {
+    "cordova": {}
+  }
 }

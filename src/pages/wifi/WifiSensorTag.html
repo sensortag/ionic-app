@@ -1,0 +1,24 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Wifi SensorTag</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content padding>
+  <h3>SensorTag Values</h3>
+  <ion-label>Ambient Temperature: {{ambientTemperature}} ℃</ion-label>
+  <ion-label>Infrared Temperature: {{irTemperature}} ℃</ion-label>
+  <ion-label>Humidity: {{humidity}} %rH</ion-label>
+  <ion-label>Barometer: {{pressure}} mBar</ion-label>
+  <ion-label>Movement accelerometer: <br> {{acceleration}} [G]</ion-label>
+  <ion-label>Movement gyrometer: <br> {{gyro}} [°/s]</ion-label>
+  <ion-label>Movement mag: <br> {{mag}} [uT]</ion-label>
+  <ion-label>Key pressed: {{keyPressed}}</ion-label>
+  <ion-label>Light: {{light}} Lux</ion-label>
+  <button ion-button secondary (click)="refreshEvent($event)">Refresh</button>
+  <ion-label>Status: {{status}} {{error}}</ion-label>
+</ion-content>

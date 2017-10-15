@@ -5,20 +5,58 @@
     </button>
     <ion-title>Wifi SensorTag</ion-title>
   </ion-navbar>
-
 </ion-header>
 
 <ion-content padding>
   <h3>SensorTag Values</h3>
-  <ion-label>Ambient Temperature: {{ambientTemperature}} ℃</ion-label>
-  <ion-label>Infrared Temperature: {{irTemperature}} ℃</ion-label>
-  <ion-label>Humidity: {{humidity}} %rH</ion-label>
-  <ion-label>Barometer: {{pressure}} mBar</ion-label>
-  <ion-label>Movement accelerometer: <br> {{acceleration}} [G]</ion-label>
-  <ion-label>Movement gyrometer: <br> {{gyro}} [°/s]</ion-label>
-  <ion-label>Movement mag: <br> {{mag}} [uT]</ion-label>
-  <ion-label>Key pressed: {{keyPressed}}</ion-label>
-  <ion-label>Light: {{light}} Lux</ion-label>
-  <button ion-button secondary (click)="refreshEvent($event)">Refresh</button>
-  <ion-label>Status: {{status}} {{error}}</ion-label>
+  <ion-list>
+    <ion-list-header>
+      Ambient sensors
+    </ion-list-header>
+    <ion-item>
+      <h2>Ambient Temperature</h2>
+      <p>{{ambientTemperature}} ℃</p>
+    </ion-item>
+    <ion-item>
+      <h2>Infrared Temperature</h2>
+      <p>{{irTemperature}} ℃</p>
+    </ion-item>
+    <ion-item>
+      <h2>Humidity</h2>
+      <p>{{humidity}} %rH</p>
+    </ion-item>
+    <ion-item>
+      <h2>Barometer</h2>
+      <p>{{pressure}} mBar</p>
+    </ion-item>
+    <ion-list-header>Movement sensors</ion-list-header>
+    <ion-item>
+      <h2>Movement accelerometer</h2>
+      <p>{{acceleration}} [G]</p>
+    </ion-item>
+    <ion-item>
+      <h2>Movement gyrometer</h2>
+      <p>{{gyro}} [°/s]</p>
+    </ion-item>
+    <ion-item>
+      <h2>Movement mag</h2>
+      <p>{{mag}} [uT]</p>
+    </ion-item>
+    <ion-list-header>
+      Other sensors
+    </ion-list-header>
+    <ion-item>
+      <h2>Key pressed</h2>
+      <p>{{keyPressed}}</p>
+    </ion-item>
+    <ion-item>
+      <h2>Light</h2>
+      <p>{{light}} Lux</p>
+    </ion-item>
+  </ion-list>
+  <button ion-button full (click)="refreshEvent($event)">Refresh</button>
+  <ion-item>
+    <h2>Status</h2>
+    <p>{{status}} {{error}}</p>
+  </ion-item>
 </ion-content>

@@ -2,8 +2,8 @@ import {Component} from "@angular/core";
 import {HTTP} from "@ionic-native/http";
 
 @Component({
-  selector: 'page-WifiSensorTag',
-  templateUrl: 'WifiSensorTag.html'
+  selector: 'page-wifi-sensor-tag',
+  templateUrl: 'wifi-sensor-tag.html'
 })
 export class WifiSensorTagPage {
   ambientTemperature: string = '0.00';
@@ -32,7 +32,7 @@ export class WifiSensorTagPage {
         this.status = response.status;
         this.error = "";
 
-        // pares the html file
+        // parse the html file
         let doc = parser.parseFromString(response.data, 'text/html');
         this.ambientTemperature = doc.getElementById('tmp').innerHTML.split(' ')[3];
         this.irTemperature = doc.getElementById('tmp').innerHTML.split(' ')[2];

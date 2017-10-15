@@ -3,7 +3,7 @@ import { Nav, Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
-import { WifiSensorTagPage } from '../pages/wifi/WifiSensorTag';
+import {WifiSensorTagPage} from '../pages/wifi/wifi-sensor-tag';
 
 @Component({
   templateUrl: 'app.html'
@@ -20,7 +20,7 @@ export class MyApp {
 
     // used for an example of ngFor and navigation
     this.pages = [
-      { title: 'WifiSensorTag', component: WifiSensorTagPage }
+      {title: 'Wifi Sensor Tag', component: WifiSensorTagPage}
     ];
 
   }

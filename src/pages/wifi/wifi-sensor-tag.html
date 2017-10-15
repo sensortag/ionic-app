@@ -6,9 +6,18 @@
     <ion-title>Wifi SensorTag</ion-title>
   </ion-navbar>
 </ion-header>
-
 <ion-content padding>
   <h3>SensorTag Values</h3>
+  <button ion-button block (click)="refreshEvent($event)">Refresh</button>
+  <ion-item>
+    <h2>IP-Address</h2>
+    <p>{{ipAddress}}</p>
+  </ion-item>
+  <ion-item>
+    <h2>Status</h2>
+    <p>{{status}} {{error}}</p>
+  </ion-item>
+
   <ion-list>
     <ion-list-header>
       Ambient sensors
@@ -29,6 +38,8 @@
       <h2>Barometer</h2>
       <p>{{pressure}} mBar</p>
     </ion-item>
+  </ion-list>
+  <ion-list>
     <ion-list-header>Movement sensors</ion-list-header>
     <ion-item>
       <h2>Movement accelerometer</h2>
@@ -42,6 +53,8 @@
       <h2>Movement mag</h2>
       <p>{{mag}} [uT]</p>
     </ion-item>
+  </ion-list>
+  <ion-list>
     <ion-list-header>
       Other sensors
     </ion-list-header>
@@ -54,9 +67,4 @@
       <p>{{light}} Lux</p>
     </ion-item>
   </ion-list>
-  <button ion-button block (click)="refreshEvent($event)">Refresh</button>
-  <ion-item>
-    <h2>Status</h2>
-    <p>{{status}} {{error}}</p>
-  </ion-item>
 </ion-content>

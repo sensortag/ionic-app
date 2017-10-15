@@ -1,0 +1,19 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Configuration</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <h3>Wifi Configuration</h3>
+  <form [formGroup]="config" (ngSubmit)="saveEvent()">
+    <ion-item>
+      <ion-label floating>IP-Address</ion-label>
+      <ion-input type="text" formControlName="ipAddress"></ion-input>
+    </ion-item>
+    <button ion-button block type="submit" [disabled]="!config.valid">Save</button>
+  </form>
+</ion-content>

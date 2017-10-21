@@ -1,4 +1,4 @@
-This is an [Ionic](http://ionicframework.com/docs/) app to communicate with the Wifi and Bluetooth [SensorTag](www.ti.com/sensortag) from TI.
+This is an [Ionic](http://ionicframework.com/docs/) app to communicate with the Wifi and Bluetooth [SensorTag](http://www.ti.com/sensortag) from TI.
 
 ## Wifi SensorTag CC3200STK-WIFIMK
 It uses the Ionic native [HTTP](https://ionicframework.com/docs/native/http/) plugin. The plugin is used to get the html page param_sensortag_poll.html of the Wifi sensor.
@@ -18,6 +18,17 @@ The body of param_sensortag_poll.html page can look like following:
 </body>
 ```
 All values are available in the hexadecimal and decimal system.<br>
+This html file is parse into the values
+
+* Ambient Temperature
+* Infrared Temperature
+* Humidity
+* Barometer
+* Movement accelerometer
+* Movement gyrometer
+* Movement magnetometer
+* Key pressed
+* Illuminance
 
 ## Bluetooth SensorTag CC2650STK
 not implemented yet

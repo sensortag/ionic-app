@@ -1,0 +1,70 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Bluetooth SensorTag</ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content padding>
+  <h3>SensorTag Values</h3>
+  <button ion-button block (click)="refreshEvent()">Refresh</button>
+  <ion-item>
+    <h2>Connected Device</h2>
+    <p>{{deviceName}}</p>
+  </ion-item>
+  <ion-item>
+    <h2>Status</h2>
+    <p>{{status}} {{error}}</p>
+  </ion-item>
+
+  <ion-list>
+    <ion-list-header>
+      Ambient sensors
+    </ion-list-header>
+    <ion-item>
+      <h2>Ambient Temperature</h2>
+      <p>{{ambientTemperature}} ℃</p>
+    </ion-item>
+    <ion-item>
+      <h2>Infrared Temperature</h2>
+      <p>{{irTemperature}} ℃</p>
+    </ion-item>
+    <ion-item>
+      <h2>Humidity</h2>
+      <p>{{humidity}} %rH</p>
+    </ion-item>
+    <ion-item>
+      <h2>Barometer</h2>
+      <p>{{pressure}} mBar</p>
+    </ion-item>
+  </ion-list>
+  <ion-list>
+    <ion-list-header>Movement sensors</ion-list-header>
+    <ion-item>
+      <h2>Accelerometer</h2>
+      <p>{{acceleration}} [G]</p>
+    </ion-item>
+    <ion-item>
+      <h2>Gyrometer</h2>
+      <p>{{gyro}} [°/s]</p>
+    </ion-item>
+    <ion-item>
+      <h2>Magnetometer</h2>
+      <p>{{mag}} [uT]</p>
+    </ion-item>
+  </ion-list>
+  <ion-list>
+    <ion-list-header>
+      Other sensors
+    </ion-list-header>
+    <ion-item>
+      <h2>Key pressed</h2>
+      <p>{{keyPressed}}</p>
+    </ion-item>
+    <ion-item>
+      <h2>Illuminance</h2>
+      <p>{{light}} Lux</p>
+    </ion-item>
+  </ion-list>
+</ion-content>

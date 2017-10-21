@@ -3,8 +3,9 @@ import { Nav, Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
-import {WifiSensorTagPage} from '../pages/wifi/wifi-sensor-tag.component';
-import {SettingsPage} from "../pages/settings/settings.component";
+import {WifiSensorTagPage} from '../pages/wifi/wifi-sensor-tag.page';
+import {SettingsPage} from "../pages/settings/settings.page";
+import {BluetoothSensorTagPage} from "../pages/bluetooth/bluetooth-sensor-tag.page";
 
 @Component({
   templateUrl: 'app.html'
@@ -19,9 +20,9 @@ export class MyApp {
   constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen) {
     this.initializeApp();
 
-    // used for an example of ngFor and navigation
     this.pages = [
       {title: 'Wifi Sensor Tag', component: WifiSensorTagPage},
+      {title: 'Bluetooth Sensor Tag', component: BluetoothSensorTagPage},
       {title: 'Settings', component: SettingsPage}
     ];
 

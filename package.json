@@ -20,6 +20,7 @@
     "@angular/http": "4.4.3",
     "@angular/platform-browser": "4.4.3",
     "@angular/platform-browser-dynamic": "4.4.3",
+    "@ionic-native/ble": "^4.3.2",
     "@ionic-native/core": "4.3.0",
     "@ionic-native/http": "^4.3.1",
     "@ionic-native/splash-screen": "4.3.0",
@@ -28,6 +29,7 @@
     "cordova-android": "^6.2.3",
     "cordova-ios": "^4.5.1",
     "cordova-plugin-advanced-http": "^1.6.1",
+    "cordova-plugin-ble-central": "^1.1.4",
     "cordova-plugin-compat": "^1.2.0",
     "cordova-plugin-device": "^1.1.4",
     "cordova-plugin-file": "^4.3.3",
@@ -57,7 +59,8 @@
       "cordova-plugin-statusbar": {},
       "cordova-plugin-whitelist": {},
       "ionic-plugin-keyboard": {},
-      "cordova-sqlite-storage": {}
+      "cordova-sqlite-storage": {},
+      "cordova-plugin-ble-central": {}
     },
     "platforms": [
       "android",

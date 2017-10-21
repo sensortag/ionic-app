@@ -18,7 +18,7 @@ The body of param_sensortag_poll.html page can look like following:
 </body>
 ```
 All values are available in the hexadecimal and decimal system.<br>
-This html file is parse into the values
+This html file contains following data:
 
 * Ambient Temperature
 * Infrared Temperature

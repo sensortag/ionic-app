@@ -1,7 +1,9 @@
 import {Component} from "@angular/core";
 import {HTTP} from "@ionic-native/http";
 import {SettingKeys, SettingsService} from "../../services/settings.service";
+import {IonicPage} from "ionic-angular";
 
+@IonicPage()
 @Component({
   selector: 'page-wifi-sensor-tag',
   templateUrl: 'wifi-sensor-tag.html'

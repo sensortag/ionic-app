@@ -3,9 +3,6 @@ import { Nav, Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
-import {WifiSensorTagPage} from '../pages/wifi/wifi-sensor-tag.page';
-import {SettingsPage} from "../pages/settings/settings.page";
-import {BluetoothSensorTagPage} from "../pages/bluetooth/bluetooth-sensor-tag.page";
 
 @Component({
   templateUrl: 'app.html'
@@ -13,7 +10,7 @@ import {BluetoothSensorTagPage} from "../pages/bluetooth/bluetooth-sensor-tag.pa
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = WifiSensorTagPage;
+  rootPage: any = 'WifiSensorTagPage';
 
   pages: Array<{title: string, component: any}>;
 
@@ -21,9 +18,9 @@ export class MyApp {
     this.initializeApp();
 
     this.pages = [
-      {title: 'Wifi Sensor Tag', component: WifiSensorTagPage},
-      {title: 'Bluetooth Sensor Tag', component: BluetoothSensorTagPage},
-      {title: 'Settings', component: SettingsPage}
+      {title: 'Wifi Sensor Tag', component: 'WifiSensorTagPage'},
+      {title: 'Bluetooth Sensor Tag', component: 'BluetoothSensorTagPage'},
+      {title: 'Settings', component: 'SettingsPage'}
     ];
 
   }

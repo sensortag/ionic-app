@@ -1,7 +1,9 @@
 import {Component} from "@angular/core";
 import {BLE} from "@ionic-native/ble";
-import {SettingKeys, SettingsService} from "../../services/settings.service";
+import {SettingsService} from "../../services/settings.service";
+import {IonicPage} from "ionic-angular";
 
+@IonicPage()
 @Component({
   selector: 'page-bluetooth-sensor-tag',
   templateUrl: 'bluetooth-sensor-tag.html'

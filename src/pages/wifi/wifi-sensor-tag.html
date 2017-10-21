@@ -8,7 +8,7 @@
 </ion-header>
 <ion-content padding>
   <h3>SensorTag Values</h3>
-  <button ion-button block (click)="refreshEvent($event)">Refresh</button>
+  <button ion-button block (click)="refreshEvent()">Refresh</button>
   <ion-item>
     <h2>IP-Address</h2>
     <p>{{ipAddress}}</p>
@@ -42,15 +42,15 @@
   <ion-list>
     <ion-list-header>Movement sensors</ion-list-header>
     <ion-item>
-      <h2>Movement accelerometer</h2>
+      <h2>Accelerometer</h2>
       <p>{{acceleration}} [G]</p>
     </ion-item>
     <ion-item>
-      <h2>Movement gyrometer</h2>
+      <h2>Gyrometer</h2>
       <p>{{gyro}} [°/s]</p>
     </ion-item>
     <ion-item>
-      <h2>Movement mag</h2>
+      <h2>Magnetometer</h2>
       <p>{{mag}} [uT]</p>
     </ion-item>
   </ion-list>
@@ -63,7 +63,7 @@
       <p>{{keyPressed}}</p>
     </ion-item>
     <ion-item>
-      <h2>Light</h2>
+      <h2>Illuminance</h2>
       <p>{{light}} Lux</p>
     </ion-item>
   </ion-list>

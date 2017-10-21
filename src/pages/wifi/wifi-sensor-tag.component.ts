@@ -1,6 +1,6 @@
 import {Component} from "@angular/core";
 import {HTTP} from "@ionic-native/http";
-import {Configuration} from "../config/configuration";
+import {SettingKeys, SettingsService} from "../../services/settings.service";
 
 @Component({
   selector: 'page-wifi-sensor-tag',
@@ -21,19 +21,19 @@ export class WifiSensorTagPage {
   private error: string;
 
   constructor(private http: HTTP,
-              private configuration: Configuration) {
-    this.configuration.loaded.subscribe((ip) => {
-      this.ipAddress = ip;
+              private settings: SettingsService) {
+    this.settings.getSetting(SettingKeys.IP_ADDRESS).then(value => {
+      this.ipAddress = value;
     });
   }
 
-  refreshEvent(event) {
-    this.ipAddress = this.configuration.ipAddress;
 
+  refreshEvent() {
     let parser = new DOMParser();
 
     this.http.get('http://' + this.ipAddress + '/param_sensortag_poll.html', {}, {})
       .then(response => {
+
 
         this.status = response.status;
         this.error = "";

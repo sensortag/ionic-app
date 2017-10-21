@@ -4,19 +4,19 @@ import {IonicApp, IonicErrorHandler, IonicModule} from 'ionic-angular';
 
 import {MyApp} from './app.component';
 import {WifiSensorTagPage} from '../pages/wifi/wifi-sensor-tag.component';
-import {ConfigurationController} from '../pages/config/config.component';
+import {SettingsPage} from '../pages/settings/settings.component';
 
 import {StatusBar} from '@ionic-native/status-bar';
 import {SplashScreen} from '@ionic-native/splash-screen';
 import {HTTP} from '@ionic-native/http';
 import {IonicStorageModule} from '@ionic/storage';
-import {Configuration} from "../pages/config/configuration";
+import {SettingsService} from "../services/settings.service";
 
 @NgModule({
   declarations: [
     MyApp,
     WifiSensorTagPage,
-    ConfigurationController
+    SettingsPage
   ],
   imports: [
     BrowserModule,
@@ -27,13 +27,13 @@ import {Configuration} from "../pages/config/configuration";
   entryComponents: [
     MyApp,
     WifiSensorTagPage,
-    ConfigurationController
+    SettingsPage
   ],
   providers: [
     StatusBar,
     SplashScreen,
     HTTP,
-    Configuration,
+    SettingsService,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

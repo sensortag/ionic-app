@@ -1,8 +1,12 @@
 import {Component} from "@angular/core";
 import {BLE} from "@ionic-native/ble";
-import {SettingsService} from "../../services/settings.service";
-import {IonicPage} from "ionic-angular";
+import {IonicPage, NavController, NavParams} from "ionic-angular";
+import {BluetoothDevice} from "../model/device";
 
+/**
+ *  Handles the communication with the selected bluetooth device.
+ *
+ */
 @IonicPage()
 @Component({
   selector: 'page-bluetooth-sensor-tag',
@@ -18,17 +22,13 @@ export class BluetoothSensorTagPage {
   private mag: string = "X: 0.00 Y: 0.00 Z: 0.00";
   private keyPressed: string = '0';
   private light: string = '0.0';
-  private deviceName: string = 'CC2650 SensorTag';
   private status: number;
   private error: string;
 
-  constructor(private ble: BLE,
-              private settings: SettingsService) {
+  private device: BluetoothDevice;
 
-  }
-
-  refreshEvent() {
-
+  constructor(private navCtrl: NavController, private navParams: NavParams, private ble: BLE) {
+    this.device = navParams.data;
   }
 
 

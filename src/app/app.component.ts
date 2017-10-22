@@ -19,7 +19,7 @@ export class MyApp {
 
     this.pages = [
       {title: 'Wifi Sensor Tag', component: 'WifiSensorTagPage'},
-      {title: 'Bluetooth Sensor Tag', component: 'BluetoothSensorTagPage'},
+      {title: 'Bluetooth device search', component: 'BluetoothDeviceSearchPage'},
       {title: 'Settings', component: 'SettingsPage'}
     ];
 

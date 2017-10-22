@@ -8,14 +8,11 @@
 </ion-header>
 <ion-content padding>
   <h3>SensorTag Values</h3>
-  <button ion-button block (click)="refreshEvent()">Refresh</button>
+
   <ion-item>
-    <h2>Connected Device</h2>
-    <p>{{deviceName}}</p>
-  </ion-item>
-  <ion-item>
-    <h2>Status</h2>
-    <p>{{status}} {{error}}</p>
+    <h2>Device</h2>
+    <p>Name: {{device.name}}</p>
+    <p>ID: {{device.id}}</p>
   </ion-item>
 
   <ion-list>

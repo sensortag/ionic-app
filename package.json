@@ -60,7 +60,9 @@
       "cordova-plugin-whitelist": {},
       "ionic-plugin-keyboard": {},
       "cordova-sqlite-storage": {},
-      "cordova-plugin-ble-central": {}
+      "cordova-plugin-ble-central": {
+        "BLUETOOTH_USAGE_DESCRIPTION": "Used to connect to the BLE SensorTag"
+      }
     },
     "platforms": [
       "android",

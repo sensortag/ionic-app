@@ -31,4 +31,5 @@ This html file contains following data:
 * Illuminance
 
 ## Bluetooth SensorTag CC2650STK
-not implemented yet
+Informatino on how to communicate with the Sensortag can be found here:
+http://processors.wiki.ti.com/index.php/CC2650_SensorTag_User's_Guide

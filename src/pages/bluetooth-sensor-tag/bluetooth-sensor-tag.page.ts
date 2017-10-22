@@ -1,6 +1,6 @@
 import {Component} from "@angular/core";
 import {BLE} from "@ionic-native/ble";
-import {IonicPage, NavController, NavParams} from "ionic-angular";
+import {IonicPage, NavController, NavParams, ToastController} from "ionic-angular";
 import {BluetoothDevice} from "../model/device";
 
 /**
@@ -22,13 +22,43 @@ export class BluetoothSensorTagPage {
   private mag: string = "X: 0.00 Y: 0.00 Z: 0.00";
   private keyPressed: string = '0';
   private light: string = '0.0';
-  private status: number;
-  private error: string = '-';
+  private status: string = 'init';
 
   private device: BluetoothDevice;
 
-  constructor(private navCtrl: NavController, private navParams: NavParams, private ble: BLE) {
+  constructor(private navCtrl: NavController, private navParams: NavParams,
+              private toastCtrl: ToastController, private ble: BLE) {
     this.device = navParams.data;
+
+    this.ble.connect(this.device.id).subscribe(
+      peripheralObject => this.onConnected(peripheralObject),
+      //Device disconnected or there was a failure connecting
+      peripheralObject => this.onDisconnected(peripheralObject)
+    )
+  }
+
+  private onConnected(peripheralObject: any) {
+    this.status = 'connection established';
+
+  }
+
+  private onDisconnected(peripheralObject: any) {
+    this.status = 'device disconnected';
+  }
+
+  /**
+   * Disconnect the device.
+   */
+  ionViewWillLeave() {
+    this.ble.disconnect(this.device.id).catch(
+      () => {
+        let toast = this.toastCtrl.create({
+          message: 'disconnect failed',
+          duration: 3000
+        });
+        toast.present();
+      }
+    )
   }
 
 

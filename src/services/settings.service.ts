@@ -7,7 +7,7 @@ export class SettingKeys {
 }
 
 /**
- Data class for the app configuration.
+ * Offers methods to store and restore settings.
  */
 @Injectable()
 export class SettingsService {

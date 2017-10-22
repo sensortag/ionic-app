@@ -3,6 +3,9 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {SettingKeys, SettingsService} from "../../services/settings.service";
 import {IonicPage} from "ionic-angular";
 
+/**
+ * Page to maintain app settings.
+ */
 @IonicPage()
 @Component({
   selector: 'page-settings',
@@ -24,6 +27,9 @@ export class SettingsPage {
 
   }
 
+  /**
+   * Save settings.
+   */
   saveEvent() {
     this.configuration.setSetting(SettingKeys.IP_ADDRESS, this.config.value.ipAddress);
   }

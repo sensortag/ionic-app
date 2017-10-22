@@ -23,7 +23,7 @@ export class BluetoothSensorTagPage {
   private keyPressed: string = '0';
   private light: string = '0.0';
   private status: number;
-  private error: string;
+  private error: string = '-';
 
   private device: BluetoothDevice;
 

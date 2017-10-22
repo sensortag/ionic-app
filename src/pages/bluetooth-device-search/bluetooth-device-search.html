@@ -7,11 +7,6 @@
   </ion-navbar>
 </ion-header>
 <ion-content padding>
-  <button ion-button block (click)="scanForDevices()">scan for bluetooth devices</button>
-  <ion-item>
-    <h2>Status</h2>
-    <p>{{status}}</p>
-  </ion-item>
   <h3>Found Devices</h3>
 
   <ion-list>
@@ -22,3 +17,10 @@
   </ion-list>
 
 </ion-content>
+<ion-footer padding>
+  <ion-item>
+    <h2>Status</h2>
+    <p>{{status}}</p>
+  </ion-item>
+  <button ion-button block (click)="scanForDevices()">scan for bluetooth devices</button>
+</ion-footer>

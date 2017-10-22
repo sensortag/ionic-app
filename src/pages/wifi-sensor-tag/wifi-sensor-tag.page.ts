@@ -25,7 +25,7 @@ export class WifiSensorTagPage {
   private ipAddress: string = '0.0.0.0';
 
   private status: number;
-  private error: string;
+  private error: string = '-';
   private loader: Loading;
 
   constructor(private http: HTTP,

@@ -15,8 +15,8 @@ import {BLE} from "@ionic-native/ble";
 })
 export class BluetoothDeviceSearchPage {
   private deviceName: string = 'SensorTag';
-  private scanningTime: number = 5;
-  private toastTime: number = 4000;
+  private scanningTime: number = 10; // time in s
+  private toastTime: number = 4000; // time in ms
   private status: string;
   private devices: Array<BluetoothDevice> = [];
 
@@ -55,10 +55,10 @@ export class BluetoothDeviceSearchPage {
    * Adds a device to the device list.
    */
   private onDeviceFound(device: BluetoothDevice) {
+    this.toast('device found' + JSON.stringify(device));
     if (device.name == this.deviceName) {
       this.devices.push(device);
     }
-    this.devices.push(device);
   }
 
   private onScanningCompleted() {

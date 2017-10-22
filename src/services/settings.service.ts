@@ -19,6 +19,7 @@ export class SettingsService {
     return this.storage.get(key);
   }
 
+  //TODO return promise
   public setSetting(key: string, value: string) {
     this.storage.ready().then(() => {
       this.storage.set(key.toString(), value)

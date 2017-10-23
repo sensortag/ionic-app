@@ -6,8 +6,8 @@ import {Sensor} from "./sensor";
  */
 export class BarometerSensor extends Sensor {
 
-  private _temperature: number = 0;
-  private _pressure: number = 0;
+  private temperature: number = 0;
+  private pressure: number = 0;
 
   constructor() {
     super(
@@ -19,19 +19,11 @@ export class BarometerSensor extends Sensor {
   }
 
   getTemperatureAsString(): string {
-    return this._temperature.toFixed(2) + ' ℃'
+    return this.temperature.toFixed(2) + ' ℃'
   }
 
   getPressureAsString(): string {
-    return this._pressure + ' mBar';
-  }
-
-  get temperature(): number {
-    return this._temperature;
-  }
-
-  get pressure(): number {
-    return this._pressure;
+    return this.pressure + ' mBar';
   }
 
   /**
@@ -50,10 +42,10 @@ export class BarometerSensor extends Sensor {
     let rawData = new Uint8Array(data);
 
     //temperature byte 0-2 in degrees Celsius
-    this._temperature = BarometerSensor.sensorBmp280Convert(rawData[0] << 16 + rawData[1] << 8 + rawData[2]);
+    this.temperature = BarometerSensor.sensorBmp280Convert(rawData[0] << 16 + rawData[1] << 8 + rawData[2]);
 
     //pressure byte 3-5 in hectopascal
-    this._pressure = BarometerSensor.sensorBmp280Convert(rawData[3] << 16 + rawData[4] << 8 + rawData[5]);
+    this.pressure = BarometerSensor.sensorBmp280Convert(rawData[3] << 16 + rawData[4] << 8 + rawData[5]);
   }
 
   private static sensorBmp280Convert(rawValue: number): number {

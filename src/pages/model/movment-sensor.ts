@@ -7,9 +7,9 @@ import {Sensor} from "./sensor";
  */
 export class MovementSensor extends Sensor {
   private static accelerometerRange: number = 0; // 0=2G, 1=4G, 2=8G, 3=16G
-  private _gyroscope: Array<number> = new Array(3);
-  private _accelerometer: Array<number> = new Array(3);
-  private _magnetometer: Array<number> = new Array(3);
+  private gyroscope: Array<number> = new Array(3);
+  private accelerometer: Array<number> = new Array(3);
+  private magnetometer: Array<number> = new Array(3);
 
   constructor() {
     super(
@@ -21,37 +21,24 @@ export class MovementSensor extends Sensor {
   }
 
   getMagnetometerAsString(): string {
-    return 'X: ' + this._magnetometer[0].toFixed(2)
-      + ' Y: ' + this._magnetometer[1].toFixed(2)
-      + ' Z: ' + this._magnetometer[2].toFixed(2)
+    return 'X: ' + this.magnetometer[0].toFixed(2)
+      + ' Y: ' + this.magnetometer[1].toFixed(2)
+      + ' Z: ' + this.magnetometer[2].toFixed(2)
       + ' [G]';
   }
 
   getAccelerometerAsString(): string {
-    return 'X: ' + this._accelerometer[0].toFixed(2)
-      + ' Y: ' + this._accelerometer[1].toFixed(2)
-      + ' Z: ' + this._accelerometer[2].toFixed(2)
+    return 'X: ' + this.accelerometer[0].toFixed(2)
+      + ' Y: ' + this.accelerometer[1].toFixed(2)
+      + ' Z: ' + this.accelerometer[2].toFixed(2)
       + ' [G]';
   }
 
   getGyroscopeAsString(): string {
-    return 'X: ' + this._gyroscope[0].toFixed(2)
-      + ' Y: ' + this._gyroscope[1].toFixed(2)
-      + ' Z: ' + this._gyroscope[2].toFixed(2)
+    return 'X: ' + this.gyroscope[0].toFixed(2)
+      + ' Y: ' + this.gyroscope[1].toFixed(2)
+      + ' Z: ' + this.gyroscope[2].toFixed(2)
       + ' [°/s]';
-  }
-
-
-  get magnetometer(): Array<number> {
-    return this._magnetometer;
-  }
-
-  get accelerometer(): Array<number> {
-    return this._accelerometer;
-  }
-
-  get gyroscope(): Array<number> {
-    return this._gyroscope;
   }
 
   /**
@@ -62,19 +49,19 @@ export class MovementSensor extends Sensor {
     let rawData = new Int16Array(data);
 
     //Gyroscope
-    this._gyroscope[0] = MovementSensor.sensorMpu9250GyroConvert(rawData[0]);
-    this._gyroscope[1] = MovementSensor.sensorMpu9250GyroConvert(rawData[1]);
-    this._gyroscope[2] = MovementSensor.sensorMpu9250GyroConvert(rawData[2]);
+    this.gyroscope[0] = MovementSensor.sensorMpu9250GyroConvert(rawData[0]);
+    this.gyroscope[1] = MovementSensor.sensorMpu9250GyroConvert(rawData[1]);
+    this.gyroscope[2] = MovementSensor.sensorMpu9250GyroConvert(rawData[2]);
 
     //Accelerometer
-    this._accelerometer[0] = MovementSensor.sensorMpu9250AccConvert(rawData[3]);
-    this._accelerometer[1] = MovementSensor.sensorMpu9250AccConvert(rawData[4]);
-    this._accelerometer[3] = MovementSensor.sensorMpu9250AccConvert(rawData[5]);
+    this.accelerometer[0] = MovementSensor.sensorMpu9250AccConvert(rawData[3]);
+    this.accelerometer[1] = MovementSensor.sensorMpu9250AccConvert(rawData[4]);
+    this.accelerometer[3] = MovementSensor.sensorMpu9250AccConvert(rawData[5]);
 
     //Magnetometer
-    this._magnetometer[0] = rawData[6];
-    this._magnetometer[1] = rawData[7];
-    this._magnetometer[2] = rawData[8];
+    this.magnetometer[0] = rawData[6];
+    this.magnetometer[1] = rawData[7];
+    this.magnetometer[2] = rawData[8];
 
   }
 

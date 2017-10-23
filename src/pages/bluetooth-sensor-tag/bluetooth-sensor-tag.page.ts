@@ -5,6 +5,7 @@ import {BluetoothDevice} from "../model/device";
 import {MovementSensor} from "../model/movment-sensor";
 import {BarometerSensor} from "../model/barometer-sensor";
 import {KeySensor} from "../model/key-sensor";
+import {TemperatureSensor} from "../model/temperature-sensor";
 
 /**
  *  Handles the communication with the selected bluetooth device.
@@ -33,6 +34,7 @@ export class BluetoothSensorTagPage {
   private movementSensor = new MovementSensor();
   private barometerSensor = new BarometerSensor();
   private keySensor = new KeySensor();
+  private temperatureSensor = new TemperatureSensor();
 
   constructor(private navCtrl: NavController, private navParams: NavParams,
               private toastCtrl: ToastController, private ble: BLE) {
@@ -74,6 +76,14 @@ export class BluetoothSensorTagPage {
         data => this.onKeyData(data),
         error => this.onError(error)
       );
+
+    //temperature sensor
+    this.ble.startNotification(this.device.id, this.temperatureSensor.serviceUUID, this.temperatureSensor.dataUUID)
+      .subscribe(
+        data => this.onTemperatureSensorData(data),
+        error => this.onError(error)
+      );
+
   }
 
   private enableSensors() {
@@ -86,6 +96,11 @@ export class BluetoothSensorTagPage {
     //barometer sensor
     this.ble.write(this.device.id, this.barometerSensor.serviceUUID,
       this.barometerSensor.configurationUUID, this.barometerSensor.getConfigurationValue())
+      .catch(error => this.onError(error));
+
+    //temperature sensor
+    this.ble.write(this.device.id, this.temperatureSensor.serviceUUID,
+      this.temperatureSensor.configurationUUID, this.temperatureSensor.getConfigurationValue())
       .catch(error => this.onError(error));
 
   }
@@ -110,6 +125,12 @@ export class BluetoothSensorTagPage {
   private onKeyData(data: any) {
     this.keySensor.convertData(data);
     this.keysPressed = this.keySensor.getKeyAsString();
+  }
+
+  private onTemperatureSensorData(data: any) {
+    this.temperatureSensor.convertData(data);
+    this.ambientTemperature = this.temperatureSensor.getAmbientTemperatureAsString();
+    this.irTemperature = this.temperatureSensor.getInfraRedTemperatureAsString();
   }
 
   private onDisconnected(peripheralObject: any) {

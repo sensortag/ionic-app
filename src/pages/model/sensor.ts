@@ -1,6 +1,7 @@
 /**
  * Data class for a sensor of the SensorTag.
  */
+
 export abstract class Sensor {
   private _serviceUUID: string;
   private _dataUUID: string;
@@ -47,4 +48,6 @@ export abstract class Sensor {
   }
 
   public abstract convertData(data: any): any;
+
+  public abstract getConfigurationValue(): ArrayBuffer;
 }

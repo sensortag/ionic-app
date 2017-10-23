@@ -20,33 +20,19 @@ export class BluetoothSensorTagPage {
   private irTemperature: string = '0.00';
   private humidity: string = '0';
   private pressure: string = '0';
-  private acceleration: string = 'X: 0.00 Y: 0.00 Z: 0.00';
-  private gyro: string = "X: 0.00 Y: 0.00 Z: 0.00";
-  private mag: string = "X: 0.00 Y: 0.00 Z: 0.00";
-  private keyPressed: string = '0';
+  private barometerTemperature = '0';
+  private accelerometer: string = 'X: 0.00 Y: 0.00 Z: 0.00';
+  private gyroscope: string = 'X: 0.00 Y: 0.00 Z: 0.00';
+  private magnetometer: string = 'X: 0.00 Y: 0.00 Z: 0.00';
+  private keysPressed: string = '0';
   private light: string = '0.0';
   private status: string = 'init';
 
   private device: BluetoothDevice;
-  private movementSensor = new MovementSensor(
-    'f000aa80-0451-4000-b000-000000000000',
-    'f000aa81-0451-4000-b000-000000000000',
-    'f000aa82-0451-4000-b000-000000000000',
-    'f000aa83-0451-4000-b000-000000000000');
-
-  private barometerSensor = new BarometerSensor(
-    'f000aa40-0451-4000-b000-000000000000',
-    'f000aa41-0451-4000-b000-000000000000',
-    'f000aa42-0451-4000-b000-000000000000',
-    'f000aa44-0451-4000-b000-000000000000'
-  );
-
-  private keySensor = new KeySensor(
-    '0000ffe0-0000-1000-8000-00805f9b34fb',
-    '0000ffe1-0000-1000-8000-00805f9b34fb',
-    '',
-    ''
-  );
+  //TODO reduce coupling
+  private movementSensor = new MovementSensor();
+  private barometerSensor = new BarometerSensor();
+  private keySensor = new KeySensor();
 
   constructor(private navCtrl: NavController, private navParams: NavParams,
               private toastCtrl: ToastController, private ble: BLE) {
@@ -91,23 +77,15 @@ export class BluetoothSensorTagPage {
   }
 
   private enableSensors() {
-    let configMovement = new Uint16Array(1);
-    configMovement[0] = 0x7F00;
 
     //movement sensor
-    this.ble.write(this.device.id, this.movementSensor.serviceUUID, this.movementSensor.configurationUUID, configMovement.buffer)
-      .catch(error => this.onError(error));
-
-    //set period
-    let periodData = new Uint8Array(1);
-    periodData[0] = 100; // 100*10ms = 1s
-    this.ble.write(this.device.id, this.movementSensor.serviceUUID, this.movementSensor.periodUUID, periodData.buffer)
+    this.ble.write(this.device.id, this.movementSensor.serviceUUID,
+      this.movementSensor.configurationUUID, this.movementSensor.getConfigurationValue())
       .catch(error => this.onError(error));
 
     //barometer sensor
-    let configBarometer = new Uint8Array(1);
-    configBarometer[0] = 0x01; //enable
-    this.ble.write(this.device.id, this.barometerSensor.serviceUUID, this.barometerSensor.configurationUUID, configBarometer.buffer)
+    this.ble.write(this.device.id, this.barometerSensor.serviceUUID,
+      this.barometerSensor.configurationUUID, this.barometerSensor.getConfigurationValue())
       .catch(error => this.onError(error));
 
   }
@@ -117,18 +95,21 @@ export class BluetoothSensorTagPage {
   }
 
   private onMovementSensorData(data: any) {
-    let convertedData = this.movementSensor.convertData(data);
-    //TODO implement
+    this.movementSensor.convertData(data);
+    this.accelerometer = this.movementSensor.getAccelerometerAsString();
+    this.gyroscope = this.movementSensor.getGyroscopeAsString();
+    this.magnetometer = this.movementSensor.getMagnetometerAsString();
   }
 
   private onBarometerSensorData(data: any) {
-    let convertedData = this.barometerSensor.convertData(data);
-    //TODO implement
+    this.barometerSensor.convertData(data);
+    this.barometerTemperature = this.barometerSensor.getPressureAsString();
+    this.pressure = this.barometerSensor.getPressureAsString();
   }
 
   private onKeyData(data: any) {
-    let convertedData = this.keySensor.convertData(data);
-    //TODO implement
+    this.keySensor.convertData(data);
+    this.keysPressed = this.keySensor.getKeyAsString();
   }
 
   private onDisconnected(peripheralObject: any) {

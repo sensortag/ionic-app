@@ -18,8 +18,8 @@ export class WifiSensorTagPage {
   private humidity: string = '0';
   private pressure: string = '0';
   private acceleration: string = 'X: 0.00 Y: 0.00 Z: 0.00';
-  private gyro: string = "X: 0.00 Y: 0.00 Z: 0.00";
-  private mag: string = "X: 0.00 Y: 0.00 Z: 0.00";
+  private gyroscope: string = "X: 0.00 Y: 0.00 Z: 0.00";
+  private magnetometer: string = "X: 0.00 Y: 0.00 Z: 0.00";
   private keyPressed: string = '0';
   private light: string = '0.0';
   private ipAddress: string = '0.0.0.0';
@@ -76,10 +76,10 @@ export class WifiSensorTagPage {
     this.acceleration = 'X: ' + doc.getElementById('acc').innerHTML.split(' ')[3]
       + ' Y:' + doc.getElementById('acc').innerHTML.split(' ')[4]
       + ' Z: ' + doc.getElementById('acc').innerHTML.split(' ')[5];
-    this.gyro = 'X: ' + doc.getElementById('gyr').innerHTML.split(' ')[3]
+    this.gyroscope = 'X: ' + doc.getElementById('gyr').innerHTML.split(' ')[3]
       + ' Y:' + doc.getElementById('gyr').innerHTML.split(' ')[4]
       + ' Z: ' + doc.getElementById('gyr').innerHTML.split(' ')[5];
-    this.mag = 'X: ' + doc.getElementById('mag').innerHTML.split(' ')[3]
+    this.magnetometer = 'X: ' + doc.getElementById('mag').innerHTML.split(' ')[3]
       + ' Y:' + doc.getElementById('mag').innerHTML.split(' ')[4]
       + ' Z: ' + doc.getElementById('mag').innerHTML.split(' ')[5];
     this.keyPressed = doc.getElementById('key').innerHTML;

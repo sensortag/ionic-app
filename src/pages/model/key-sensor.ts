@@ -19,7 +19,7 @@ export class KeySensor extends Sensor {
     );
   }
 
-  getKeyAsString() {
+  getKeyAsString(): string {
     let keys: string = '';
     if (this.leftKey) keys += 'left key ';
     if (this.rightKey) keys += 'right key ';

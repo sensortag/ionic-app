@@ -103,7 +103,7 @@ export class BluetoothSensorTagPage {
 
   private onBarometerSensorData(data: any) {
     this.barometerSensor.convertData(data);
-    this.barometerTemperature = this.barometerSensor.getPressureAsString();
+    this.barometerTemperature = this.barometerSensor.getTemperatureAsString();
     this.pressure = this.barometerSensor.getPressureAsString();
   }
 

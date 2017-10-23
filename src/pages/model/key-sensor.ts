@@ -32,12 +32,13 @@ export class KeySensor extends Sensor {
    * @param data 1 Byte
    */
   convertData(data: any) {
+    let rawData = new Uint8Array(data);
     //Bit 0: left key (user button)
-    this.leftKey = (data[0] << 7) == 0x10;
+    this.leftKey = (rawData[0] << 7) == 0x10;
     //Bit 1: right key (power button)
-    this.rightKey = ((data[0] >> 1) << 7) == 0x10;
+    this.rightKey = ((rawData[0] >> 1) << 7) == 0x10;
     //Bit 2: reed relay
-    this.reedRelay = ((data[0] >> 2) << 7) == 0x10;
+    this.reedRelay = ((rawData[0] >> 2) << 7) == 0x10;
   }
 
   /**

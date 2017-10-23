@@ -44,9 +44,11 @@ export class BarometerSensor extends Sensor {
 
   /**
    *
-   * @param rawData 6Bytes
+   * @param data 6Bytes
    */
-  public convertData(rawData: any) {
+  public convertData(data: any) {
+    let rawData = new Uint8Array(data);
+
     //temperature byte 0-2 in degrees Celsius
     this._temperature = BarometerSensor.sensorBmp280Convert(rawData[0] << 16 + rawData[1] << 8 + rawData[2]);
 

@@ -56,9 +56,10 @@ export class MovementSensor extends Sensor {
 
   /**
    *
-   * @param rawData 18Bytes = 9*16Bit signed
+   * @param data 18Bytes = 9*16Bit signed
    */
-  public convertData(rawData: any) {
+  public convertData(data: any) {
+    let rawData = new Int16Array(data);
 
     //Gyroscope
     this._gyroscope[0] = MovementSensor.sensorMpu9250GyroConvert(rawData[0]);

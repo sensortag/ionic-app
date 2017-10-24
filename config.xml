@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="io.ionic.starter" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>SensorTagWifi</name>
+<widget id="ionic.app.sensortag" version="0.0.1" xmlns="http://www.w3.org/ns/widgets">
+  <name>SensorTagApp</name>
     <description>Display data of the SensorTag</description>
-  <author email="" href="https://github.com/sensortag/wifi"/>
+  <author email="" href="https://github.com/sensortag/"/>
     <content src="index.html" />
     <access origin="*" />
     <allow-intent href="http://*/*" />

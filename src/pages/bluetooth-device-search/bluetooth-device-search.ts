@@ -38,7 +38,7 @@ export class BluetoothDeviceSearchPage {
     });
   }
 
-  /*
+  /**
    * Scans for bluetooth devices.
    */
   private startScanning() {
@@ -51,8 +51,9 @@ export class BluetoothDeviceSearchPage {
     );
   }
 
-  /*
+  /**
    * Adds a device to the device list.
+   * @param {BluetoothDevice} device
    */
   private onDeviceFound(device: BluetoothDevice) {
     this.toast('device found' + JSON.stringify(device));

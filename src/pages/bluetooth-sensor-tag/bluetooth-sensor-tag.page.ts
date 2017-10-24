@@ -1,4 +1,4 @@
-import {Component} from "@angular/core";
+import {Component, NgZone} from "@angular/core";
 import {BLE} from "@ionic-native/ble";
 import {IonicPage, NavController, NavParams, ToastController} from "ionic-angular";
 import {BluetoothDevice} from "../model/device";
@@ -37,7 +37,8 @@ export class BluetoothSensorTagPage {
   private temperatureSensor = new TemperatureSensor();
 
   constructor(private navCtrl: NavController, private navParams: NavParams,
-              private toastCtrl: ToastController, private ble: BLE) {
+              private toastCtrl: ToastController, private ble: BLE,
+              private ngZone: NgZone) {
     this.device = navParams.data;
 
     this.ble.connect(this.device.id).subscribe(
@@ -106,35 +107,46 @@ export class BluetoothSensorTagPage {
   }
 
   private onError(error: any) {
-    this.status = 'Error' + error;
+    this.ngZone.run(() => {
+      this.status = 'Error' + error;
+      this.showToast(error);
+    });
   }
 
   private onMovementSensorData(data: any) {
     this.movementSensor.convertData(data);
-    this.accelerometer = this.movementSensor.getAccelerometerAsString();
-    this.gyroscope = this.movementSensor.getGyroscopeAsString();
-    this.magnetometer = this.movementSensor.getMagnetometerAsString();
+    this.ngZone.run(() => {
+      this.accelerometer = this.movementSensor.getAccelerometerAsString();
+      this.gyroscope = this.movementSensor.getGyroscopeAsString();
+      this.magnetometer = this.movementSensor.getMagnetometerAsString();
+    });
   }
 
   private onBarometerSensorData(data: any) {
     this.barometerSensor.convertData(data);
-    this.barometerTemperature = this.barometerSensor.getTemperatureAsString();
-    this.pressure = this.barometerSensor.getPressureAsString();
+    this.ngZone.run(() => {
+      this.barometerTemperature = this.barometerSensor.getTemperatureAsString();
+      this.pressure = this.barometerSensor.getPressureAsString();
+    });
   }
 
   private onKeyData(data: any) {
     this.keySensor.convertData(data);
-    this.keysPressed = this.keySensor.getKeyAsString();
+    this.ngZone.run(() => this.keysPressed = this.keySensor.getKeyAsString());
   }
 
   private onTemperatureSensorData(data: any) {
     this.temperatureSensor.convertData(data);
-    this.ambientTemperature = this.temperatureSensor.getAmbientTemperatureAsString();
-    this.irTemperature = this.temperatureSensor.getInfraRedTemperatureAsString();
+    this.ngZone.run(() => {
+      this.ambientTemperature = this.temperatureSensor.getAmbientTemperatureAsString();
+      this.irTemperature = this.temperatureSensor.getInfraRedTemperatureAsString();
+    });
   }
 
   private onDisconnected(peripheralObject: any) {
-    this.status = 'device disconnected';
+    let message = 'device disconnected';
+    this.status = message;
+    this.showToast(message)
   }
 
   /**
@@ -142,13 +154,16 @@ export class BluetoothSensorTagPage {
    */
   ionViewWillLeave() {
     this.ble.disconnect(this.device.id).catch(
-      () => {
-        let toast = this.toastCtrl.create({
-          message: 'disconnect failed',
-          duration: 3000
-        });
-        toast.present();
-      }
+      () => this.showToast('disconnect failed')
     )
   }
+
+  private showToast(message: string) {
+    let toast = this.toastCtrl.create({
+      message: message,
+      duration: 3000
+    });
+    toast.present();
+  }
+
 }

@@ -24,6 +24,7 @@ export class KeySensor extends Sensor {
     if (this.leftKey) keys += 'left key ';
     if (this.rightKey) keys += 'right key ';
     if (this.reedRelay) keys += 'reed relay';
+    if (keys === '') keys = 'no key pressed';
     return keys.trim();
   }
 
@@ -34,11 +35,11 @@ export class KeySensor extends Sensor {
   convertData(data: any) {
     let rawData = new Uint8Array(data);
     //Bit 0: left key (user button)
-    this.leftKey = (rawData[0] << 7) == 0x10;
+    this.leftKey = (rawData[0] & 0x01) == 0x01;
     //Bit 1: right key (power button)
-    this.rightKey = ((rawData[0] >> 1) << 7) == 0x10;
+    this.rightKey = (rawData[0] & 0x02) == 0x02;
     //Bit 2: reed relay
-    this.reedRelay = ((rawData[0] >> 2) << 7) == 0x10;
+    this.reedRelay = (rawData[0] & 0x03) == 0x03;
   }
 
   /**

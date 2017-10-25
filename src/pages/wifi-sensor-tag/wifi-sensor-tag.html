@@ -61,12 +61,8 @@
 </ion-content>
 <ion-footer padding>
   <ion-item>
-    <h2>IP-Address</h2>
-    <p>{{ipAddress}}</p>
-  </ion-item>
-  <ion-item>
-    <h2>Status</h2>
-    <p>{{status}} {{error}}</p>
+    <p>IP-Address: {{ipAddress}}</p>
+    <p>Status: {{status}} {{error}}</p>
   </ion-item>
   <button ion-button block (click)="refreshEvent()">Refresh</button>
 </ion-footer>

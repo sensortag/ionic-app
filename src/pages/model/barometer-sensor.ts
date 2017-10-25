@@ -40,16 +40,17 @@ export class BarometerSensor extends Sensor {
    */
   public convertData(data: any) {
     let rawData = new Uint8Array(data);
+    // 	Temp[0:7], Temp[8:15], Temp[16:23], Press[0:7], Press[8:15], Press[16:23]
 
     //temperature byte 0-2 in degrees Celsius
-    this.temperature = BarometerSensor.sensorBmp280Convert(rawData[0] << 16 + rawData[1] << 8 + rawData[2]);
+    this.temperature = BarometerSensor.sensorBmp280Convert(rawData[0] | (rawData[1] << 8) | (rawData[2] << 16));
 
     //pressure byte 3-5 in hectopascal
-    this.pressure = BarometerSensor.sensorBmp280Convert(rawData[3] << 16 + rawData[4] << 8 + rawData[5]);
+    this.pressure = BarometerSensor.sensorBmp280Convert(rawData[3] | (rawData[4] << 8) | (rawData[5] << 16));
   }
 
   private static sensorBmp280Convert(rawValue: number): number {
-    return rawValue[0] / 100;
+    return rawValue / 100;
   }
 
 }

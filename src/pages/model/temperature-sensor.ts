@@ -37,8 +37,8 @@ export class TemperatureSensor extends Sensor {
    */
   convertData(data: any) {
     let rawData = new Uint16Array(data);
-    this.ambientTemperature = TemperatureSensor.convertTemperature(rawData[0]);
-    this.infraRedTemperature = TemperatureSensor.convertTemperature(rawData[1]);
+    this.infraRedTemperature = TemperatureSensor.convertTemperature(rawData[0]);
+    this.ambientTemperature = TemperatureSensor.convertTemperature(rawData[1]);
   }
 
   /**

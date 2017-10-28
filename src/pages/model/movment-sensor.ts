@@ -56,7 +56,7 @@ export class MovementSensor extends Sensor {
     //Accelerometer
     this.accelerometer[0] = MovementSensor.sensorMpu9250AccConvert(rawData[3]);
     this.accelerometer[1] = MovementSensor.sensorMpu9250AccConvert(rawData[4]);
-    this.accelerometer[3] = MovementSensor.sensorMpu9250AccConvert(rawData[5]);
+    this.accelerometer[2] = MovementSensor.sensorMpu9250AccConvert(rawData[5]);
 
     //Magnetometer
     this.magnetometer[0] = rawData[6];
@@ -83,22 +83,21 @@ export class MovementSensor extends Sensor {
      *  10:15 	Not used
      *
      * Gyro (all axis), Acc (all axis), Mag (all axis) & wake on motion enabled & acc range 2G
-     * 0b111111100000000 = 0x7F00
+     * 0b000000011111111 = 0x00FF
      *
      */
-    //TODO use this.accelerometerRange to build config value
     let configMovement = new Uint16Array(1);
-    configMovement[0] = 0x7F00;
+    configMovement[0] = 0x00FF;// | (MovementSensor.accelerometerRange << 8);
 
     return configMovement.buffer;
   }
 
   private static sensorMpu9250GyroConvert(data: number): number {
-    return data[0] / (65536 / 500);
+    return data / (65536 / 500);
   }
 
   private static sensorMpu9250AccConvert(data: number): number {
-    return data[0] / (32768 / (2 ^ this.accelerometerRange + 1));
+    return data / (32768 / (2 ^ MovementSensor.accelerometerRange + 1));
   }
 
 }

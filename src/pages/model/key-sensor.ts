@@ -39,7 +39,7 @@ export class KeySensor extends Sensor {
     //Bit 1: right key (power button)
     this.rightKey = (rawData[0] & 0x02) == 0x02;
     //Bit 2: reed relay
-    this.reedRelay = (rawData[0] & 0x03) == 0x03;
+    this.reedRelay = (rawData[0] & 0x04) == 0x04;
   }
 
   /**

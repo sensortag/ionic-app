@@ -7,6 +7,13 @@ describe('key-sensor', () => {
     keySensor = new KeySensor();
   });
 
+  it('no key should be pressed', () => {
+    let data = new Uint8Array(1);
+
+    keySensor.convertData(data);
+
+    expect(keySensor.getKeyAsString()).toBe('no key pressed')
+  });
 
   it('left key should be pressed', () => {
     let data = new Uint8Array(1);

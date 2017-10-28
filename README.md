@@ -1,5 +1,13 @@
 This is an [Ionic](http://ionicframework.com/docs/) app to communicate with the Wifi and Bluetooth [SensorTag](http://www.ti.com/sensortag) from TI.
 
+## Run the app
+To build and then run the app on a connected device use the command `ionic cordova run android --prod`.
+
+## Testing
+To run unit tests run `npm run test`.
+To run e2e tests run `ionic serve` and then `npm run e2e`.
+For more information see https://github.com/ionic-team/ionic-unit-testing-example.
+
 ## Wifi SensorTag CC3200STK-WIFIMK
 It uses the Ionic native [HTTP](https://ionicframework.com/docs/native/http/) plugin. The plugin is used to get the html page param_sensortag_poll.html of the Wifi sensor.
 ### param_sensortag_poll.html
@@ -33,8 +41,3 @@ This html file contains following data:
 ## Bluetooth SensorTag CC2650STK
 Informatino on how to communicate with the Sensortag can be found here:
 http://processors.wiki.ti.com/index.php/CC2650_SensorTag_User's_Guide
-
-## Testing
-To run unit tests run `npm run test`.
-To run e2e tests run `ionic serve` and then `npm run e2e`.
-For more information see https://github.com/ionic-team/ionic-unit-testing-example.

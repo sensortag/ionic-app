@@ -6,7 +6,7 @@ import {Sensor} from "./sensor";
  *
  */
 export class MovementSensor extends Sensor {
-  private static accelerometerRange: number = 0; // 0=2G, 1=4G, 2=8G, 3=16G
+  private static accelerometerRange: number = 2; // 0=2G, 1=4G, 2=8G, 3=16G
   private gyroscope: Array<number> = new Array(3);
   private accelerometer: Array<number> = new Array(3);
   private magnetometer: Array<number> = new Array(3);
@@ -87,7 +87,7 @@ export class MovementSensor extends Sensor {
      *
      */
     let configMovement = new Uint16Array(1);
-    configMovement[0] = 0x00FF;// | (MovementSensor.accelerometerRange << 8);
+    configMovement[0] = 0x00FF | (MovementSensor.accelerometerRange << 8);
 
     return configMovement.buffer;
   }
@@ -97,7 +97,7 @@ export class MovementSensor extends Sensor {
   }
 
   private static sensorMpu9250AccConvert(data: number): number {
-    return data / (32768 / (2 ^ MovementSensor.accelerometerRange + 1));
+    return data / (32768 / (Math.pow(2, MovementSensor.accelerometerRange + 1)));
   }
 
 }

@@ -1,5 +1,5 @@
-import {Component} from '@angular/core';
-import {IonicPage, NavController, NavParams, ToastController} from 'ionic-angular';
+import {Component, NgZone} from '@angular/core';
+import {IonicPage, NavController, ToastController} from 'ionic-angular';
 import {BluetoothDevice} from "../model/device";
 import {BLE} from "@ionic-native/ble";
 
@@ -21,7 +21,8 @@ export class BluetoothDeviceSearchPage {
   private devices: Array<BluetoothDevice> = [];
 
   constructor(public navCtrl: NavController,
-              private ble: BLE, public toastCtrl: ToastController) {
+              private ble: BLE, public toastCtrl: ToastController,
+              private ngZone: NgZone) {
   }
 
   /**
@@ -30,7 +31,7 @@ export class BluetoothDeviceSearchPage {
    */
   scanForDevices() {
     this.resetList();
-
+    //TODO add check if location service is on if os is Android
     this.ble.enable().then(() => {
       this.startScanning();
     }).catch(() => {
@@ -42,13 +43,17 @@ export class BluetoothDeviceSearchPage {
    * Scans for bluetooth devices.
    */
   private startScanning() {
-    this.status = 'started scanning';
+    this.setStatusMessage('scanning');
 
     this.ble.scan([], this.scanningTime).subscribe(
       device => this.onDeviceFound(device),
-      error => this.onScanningError(error),
-      () => this.onScanningCompleted()
+      error => this.onScanningError(error)
     );
+    // set a timeout function to reset the status,
+    // because complete of ble.scan(..).subscribe is never called
+    setTimeout(() => {
+      this.setStatusMessage('scanning completed');
+    }, this.scanningTime * 1000);
   }
 
   /**
@@ -56,19 +61,13 @@ export class BluetoothDeviceSearchPage {
    * @param {BluetoothDevice} device
    */
   private onDeviceFound(device: BluetoothDevice) {
-    this.toast('device found' + JSON.stringify(device));
     if (device.name === this.deviceName) {
-      this.devices.push(device);
+      this.ngZone.run(() => this.devices.push(device));
     }
   }
 
-  private onScanningCompleted() {
-    this.status = 'scan completed';
-  }
-
   private onScanningError(error) {
-    this.status = 'scanning error: ' + error;
-    this.toast('scanning error: ' + error);
+    this.setStatusMessage('scanning error: ' + error);
   }
 
   /**
@@ -97,4 +96,7 @@ export class BluetoothDeviceSearchPage {
     this.navCtrl.push('BluetoothSensorTagPage', device)
   }
 
+  private setStatusMessage(message: string) {
+    this.ngZone.run(() => this.status = message);
+  }
 }

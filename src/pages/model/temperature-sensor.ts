@@ -32,6 +32,8 @@ export class TemperatureSensor extends Sensor {
   }
 
   /**
+   * The parameter should have following structure:
+   * Object[0:7], Object[8:15], Ambience[0:7], Ambience[8:15]
    *
    * @param data 4 Byte = 2*16Bit
    */

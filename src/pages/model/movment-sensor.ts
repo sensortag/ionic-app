@@ -6,11 +6,11 @@ import {Sensor} from "./sensor";
  *
  */
 export class MovementSensor extends Sensor {
-  private static accelerometerRange: number = 2; // 0=2G, 1=4G, 2=8G, 3=16G
+  private static _accelerometerRange: number = 2; // 0=2G, 1=4G, 2=8G, 3=16G
   private gyroscope: Array<number> = new Array(3);
+
   private accelerometer: Array<number> = new Array(3);
   private magnetometer: Array<number> = new Array(3);
-
   constructor() {
     super(
       'f000aa80-0451-4000-b000-000000000000',
@@ -20,24 +20,32 @@ export class MovementSensor extends Sensor {
     );
   }
 
+  static get accelerometerRange(): number {
+    return this._accelerometerRange;
+  }
+
+  static set accelerometerRange(value: number) {
+    this._accelerometerRange = value;
+  }
+
   getMagnetometerAsString(): string {
-    return 'X: ' + this.magnetometer[0].toFixed(2)
-      + ' Y: ' + this.magnetometer[1].toFixed(2)
-      + ' Z: ' + this.magnetometer[2].toFixed(2)
-      + ' [G]';
+    return 'X: ' + this.magnetometer[0].toFixed(0)
+      + ', Y: ' + this.magnetometer[1].toFixed(0)
+      + ', Z: ' + this.magnetometer[2].toFixed(0)
+      + ' [uT]';
   }
 
   getAccelerometerAsString(): string {
     return 'X: ' + this.accelerometer[0].toFixed(2)
-      + ' Y: ' + this.accelerometer[1].toFixed(2)
-      + ' Z: ' + this.accelerometer[2].toFixed(2)
+      + ', Y: ' + this.accelerometer[1].toFixed(2)
+      + ', Z: ' + this.accelerometer[2].toFixed(2)
       + ' [G]';
   }
 
   getGyroscopeAsString(): string {
     return 'X: ' + this.gyroscope[0].toFixed(2)
-      + ' Y: ' + this.gyroscope[1].toFixed(2)
-      + ' Z: ' + this.gyroscope[2].toFixed(2)
+      + ', Y: ' + this.gyroscope[1].toFixed(2)
+      + ', Z: ' + this.gyroscope[2].toFixed(2)
       + ' [°/s]';
   }
 
@@ -87,7 +95,7 @@ export class MovementSensor extends Sensor {
      *
      */
     let configMovement = new Uint16Array(1);
-    configMovement[0] = 0x00FF | (MovementSensor.accelerometerRange << 8);
+    configMovement[0] = 0x00FF | (MovementSensor._accelerometerRange << 8);
 
     return configMovement.buffer;
   }
@@ -97,7 +105,7 @@ export class MovementSensor extends Sensor {
   }
 
   private static sensorMpu9250AccConvert(data: number): number {
-    return data / (32768 / (Math.pow(2, MovementSensor.accelerometerRange + 1)));
+    return data / (32768 / (Math.pow(2, MovementSensor._accelerometerRange + 1)));
   }
 
 }

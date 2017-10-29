@@ -18,17 +18,17 @@ import {HumiditySensor} from "../model/humidity-sensor";
   templateUrl: 'bluetooth-sensor-tag.html'
 })
 export class BluetoothSensorTagPage {
-  private ambientTemperature: string = '0.00';
-  private irTemperature: string = '0.00';
-  private humidity: string = '0';
+  private ambientTemperature: string;
+  private irTemperature: string;
+  private humidity: string;
   private humiditySensorTemperature: string;
-  private pressure: string = '0';
-  private barometerTemperature = '0';
-  private accelerometer: string = 'X: 0.00 Y: 0.00 Z: 0.00';
-  private gyroscope: string = 'X: 0.00 Y: 0.00 Z: 0.00';
-  private magnetometer: string = 'X: 0.00 Y: 0.00 Z: 0.00';
-  private keysPressed: string = '0';
-  private light: string = '0.0';
+  private pressure: string;
+  private barometerTemperature;
+  private accelerometer: string;
+  private gyroscope: string;
+  private magnetometer: string;
+  private keysPressed: string;
+  private light: string;
   private status: string = 'init';
 
   private device: BluetoothDevice;

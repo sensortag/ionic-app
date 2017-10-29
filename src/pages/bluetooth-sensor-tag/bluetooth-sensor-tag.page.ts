@@ -7,6 +7,7 @@ import {BarometerSensor} from "../model/barometer-sensor";
 import {KeySensor} from "../model/key-sensor";
 import {TemperatureSensor} from "../model/temperature-sensor";
 import {HumiditySensor} from "../model/humidity-sensor";
+import {OpticalSensor} from "../model/optical-sensor";
 
 /**
  *  Handles the communication with the selected bluetooth device.
@@ -28,7 +29,7 @@ export class BluetoothSensorTagPage {
   private gyroscope: string;
   private magnetometer: string;
   private keysPressed: string;
-  private light: string;
+  private illuminance: string;
   private status: string = 'init';
 
   private device: BluetoothDevice;
@@ -38,6 +39,7 @@ export class BluetoothSensorTagPage {
   private keySensor = new KeySensor();
   private temperatureSensor = new TemperatureSensor();
   private humiditySensor = new HumiditySensor();
+  private opticalSensor = new OpticalSensor();
 
   constructor(private navCtrl: NavController, private navParams: NavParams,
               private toastCtrl: ToastController, private ble: BLE,
@@ -95,6 +97,14 @@ export class BluetoothSensorTagPage {
         error => this.onError(error)
       );
 
+    // optical sensor
+    this.ble.startNotification(this.device.id, this.opticalSensor.serviceUUID, this.opticalSensor.dataUUID)
+      .subscribe(
+        data => this.onOpticalSensorData(data),
+        error => this.onError(error)
+      );
+
+
   }
 
   private enableSensors() {
@@ -117,6 +127,11 @@ export class BluetoothSensorTagPage {
     // humidity sensor
     this.ble.write(this.device.id, this.humiditySensor.serviceUUID,
       this.humiditySensor.configurationUUID, this.humiditySensor.getConfigurationValue())
+      .catch(error => this.onError(error));
+
+    // optical sensor
+    this.ble.write(this.device.id, this.opticalSensor.serviceUUID,
+      this.opticalSensor.configurationUUID, this.opticalSensor.getConfigurationValue())
       .catch(error => this.onError(error));
 
   }
@@ -163,6 +178,13 @@ export class BluetoothSensorTagPage {
     this.ngZone.run(() => {
       this.humidity = this.humiditySensor.getHumidityAsString();
       this.humiditySensorTemperature = this.humiditySensor.getTemperatureAsString();
+    });
+  }
+
+  private onOpticalSensorData(data: any) {
+    this.opticalSensor.convertData(data);
+    this.ngZone.run(() => {
+      this.illuminance = this.opticalSensor.getIlluminanceAsString();
     });
   }
 

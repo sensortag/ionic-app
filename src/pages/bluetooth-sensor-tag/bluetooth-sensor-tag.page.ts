@@ -6,6 +6,7 @@ import {MovementSensor} from "../model/movment-sensor";
 import {BarometerSensor} from "../model/barometer-sensor";
 import {KeySensor} from "../model/key-sensor";
 import {TemperatureSensor} from "../model/temperature-sensor";
+import {HumiditySensor} from "../model/humidity-sensor";
 
 /**
  *  Handles the communication with the selected bluetooth device.
@@ -20,6 +21,7 @@ export class BluetoothSensorTagPage {
   private ambientTemperature: string = '0.00';
   private irTemperature: string = '0.00';
   private humidity: string = '0';
+  private humiditySensorTemperature: string;
   private pressure: string = '0';
   private barometerTemperature = '0';
   private accelerometer: string = 'X: 0.00 Y: 0.00 Z: 0.00';
@@ -35,6 +37,7 @@ export class BluetoothSensorTagPage {
   private barometerSensor = new BarometerSensor();
   private keySensor = new KeySensor();
   private temperatureSensor = new TemperatureSensor();
+  private humiditySensor = new HumiditySensor();
 
   constructor(private navCtrl: NavController, private navParams: NavParams,
               private toastCtrl: ToastController, private ble: BLE,
@@ -43,7 +46,7 @@ export class BluetoothSensorTagPage {
 
     this.ble.connect(this.device.id).subscribe(
       peripheralObject => this.onConnected(peripheralObject),
-      //Device disconnected or there was a failure
+      // device disconnected or there was a failure
       peripheralObject => this.onDisconnected(peripheralObject)
     )
   }
@@ -57,31 +60,38 @@ export class BluetoothSensorTagPage {
   }
 
   private subscribeToServices() {
-    //movement sensor
+    // movement sensor
     this.ble.startNotification(this.device.id, this.movementSensor.serviceUUID, this.movementSensor.dataUUID)
       .subscribe(
         data => this.onMovementSensorData(data),
         error => this.onError(error),
       );
 
-    //barometer sensor
+    // barometer sensor
     this.ble.startNotification(this.device.id, this.barometerSensor.serviceUUID, this.barometerSensor.dataUUID)
       .subscribe(
         data => this.onBarometerSensorData(data),
         error => this.onError(error)
       );
 
-    //keys
+    // keys
     this.ble.startNotification(this.device.id, this.keySensor.serviceUUID, this.keySensor.dataUUID)
       .subscribe(
         data => this.onKeyData(data),
         error => this.onError(error)
       );
 
-    //temperature sensor
+    // temperature sensor
     this.ble.startNotification(this.device.id, this.temperatureSensor.serviceUUID, this.temperatureSensor.dataUUID)
       .subscribe(
         data => this.onTemperatureSensorData(data),
+        error => this.onError(error)
+      );
+
+    // humidity sensor
+    this.ble.startNotification(this.device.id, this.humiditySensor.serviceUUID, this.humiditySensor.dataUUID)
+      .subscribe(
+        data => this.onHumiditySensorData(data),
         error => this.onError(error)
       );
 
@@ -89,19 +99,24 @@ export class BluetoothSensorTagPage {
 
   private enableSensors() {
 
-    //movement sensor
+    // movement sensor
     this.ble.write(this.device.id, this.movementSensor.serviceUUID,
       this.movementSensor.configurationUUID, this.movementSensor.getConfigurationValue())
       .catch(error => this.onError(error));
 
-    //barometer sensor
+    // barometer sensor
     this.ble.write(this.device.id, this.barometerSensor.serviceUUID,
       this.barometerSensor.configurationUUID, this.barometerSensor.getConfigurationValue())
       .catch(error => this.onError(error));
 
-    //temperature sensor
+    // temperature sensor
     this.ble.write(this.device.id, this.temperatureSensor.serviceUUID,
       this.temperatureSensor.configurationUUID, this.temperatureSensor.getConfigurationValue())
+      .catch(error => this.onError(error));
+
+    // humidity sensor
+    this.ble.write(this.device.id, this.humiditySensor.serviceUUID,
+      this.humiditySensor.configurationUUID, this.humiditySensor.getConfigurationValue())
       .catch(error => this.onError(error));
 
   }
@@ -143,6 +158,14 @@ export class BluetoothSensorTagPage {
     });
   }
 
+  private onHumiditySensorData(data: any) {
+    this.humiditySensor.convertData(data);
+    this.ngZone.run(() => {
+      this.humidity = this.humiditySensor.getHumidityAsString();
+      this.humiditySensorTemperature = this.humiditySensor.getTemperatureAsString();
+    });
+  }
+
   private onDisconnected(peripheralObject: any) {
     let message = 'device disconnected';
     this.status = message;
@@ -165,5 +188,4 @@ export class BluetoothSensorTagPage {
     });
     toast.present();
   }
-
 }

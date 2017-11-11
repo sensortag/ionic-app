@@ -1,7 +1,8 @@
 import {Component} from "@angular/core";
 import {HTTP, HTTPResponse} from "@ionic-native/http";
+import {Diagnostic} from '@ionic-native/diagnostic';
 import {SettingKeys, SettingsService} from "../../services/settings.service";
-import {IonicPage, Loading, LoadingController} from "ionic-angular";
+import {IonicPage, Loading, LoadingController, ToastController} from "ionic-angular";
 
 
 /**
@@ -29,6 +30,8 @@ export class WifiSensorTagPage {
   private loader: Loading;
 
   constructor(private http: HTTP,
+              private diagnostic: Diagnostic,
+              private toastCtrl: ToastController,
               private settings: SettingsService,
               private loadingCtrl: LoadingController) {
 
@@ -42,7 +45,31 @@ export class WifiSensorTagPage {
    * Get the html page which contains the SensorTag data.
    */
   refreshEvent() {
-    this.showLoader();
+    this.diagnostic.isWifiEnabled().then((wifiEnabled) => {
+      if (wifiEnabled) {
+
+        this.showLoader();
+        this.getWifiSensorData();
+
+      } else {
+
+        let toast = this.toastCtrl.create({
+          message: 'Please enable wifi!',
+          duration: 4000
+        });
+        toast.present();
+
+      }
+
+    }).catch((error) =>
+      this.error = 'Error during check if wifi is enabled: ' + error
+    )
+  }
+
+  /**
+   * Tries to get the wifi sensor data.
+   */
+  private getWifiSensorData() {
     this.http.get('http://' + this.ipAddress + '/param_sensortag_poll.html', {}, {})
       .then(response => {
         this.dismissLoader();
@@ -57,7 +84,6 @@ export class WifiSensorTagPage {
         this.error = error.error;
 
       });
-
   }
 
   /**
@@ -87,6 +113,9 @@ export class WifiSensorTagPage {
 
   }
 
+  /**
+   * Shows loading symbol.
+   */
   private showLoader() {
     this.loader = this.loadingCtrl.create({
       content: "Please wait...",
@@ -94,6 +123,9 @@ export class WifiSensorTagPage {
     this.loader.present();
   }
 
+  /**
+   * Removes loading symbol.
+   */
   private dismissLoader() {
     this.loader.dismiss();
   }

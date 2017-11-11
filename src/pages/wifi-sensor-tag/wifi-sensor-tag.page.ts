@@ -1,4 +1,4 @@
-import {Component} from "@angular/core";
+import {Component, NgZone} from "@angular/core";
 import {HTTP, HTTPResponse} from "@ionic-native/http";
 import {Diagnostic} from '@ionic-native/diagnostic';
 import {SettingKeys, SettingsService} from "../../services/settings.service";
@@ -25,8 +25,7 @@ export class WifiSensorTagPage {
   private light: string = '0.0';
   private ipAddress: string = '0.0.0.0';
 
-  private status: number;
-  private error: string = '-';
+  private status: string = '-';
   private loader: Loading;
 
   constructor(private http: HTTP,
@@ -65,11 +64,11 @@ export class WifiSensorTagPage {
         }
 
       }).catch((error) =>
-        this.error = 'Error during check if wifi is enabled: ' + error
+        this.status = 'Error during check if wifi is enabled: ' + error
       );
 
     }).catch(() =>
-      this.error = 'Platform not ready'
+      this.status = 'Platform not ready!'
     );
   }
 
@@ -80,15 +79,13 @@ export class WifiSensorTagPage {
     this.http.get('http://' + this.ipAddress + '/param_sensortag_poll.html', {}, {})
       .then(response => {
         this.dismissLoader();
-        this.status = response.status;
-        this.error = "";
+        this.status = response.status.toString();
 
         this.parseHtmlFile(response);
       })
       .catch(error => {
         this.dismissLoader();
-        this.status = error.status;
-        this.error = error.error;
+        this.status = error.status.toString() + ': ' + error.error;
 
       });
   }

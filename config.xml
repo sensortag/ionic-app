@@ -21,7 +21,7 @@
     <preference name="SplashScreenDelay" value="3000" />
     <platform name="android">
         <config-file parent="/*" target="AndroidManifest.xml">
-            <!-- needed for the method isWifiEnabled() of the plugin cordova-diagnostic-plugin-->
+            <!-- needed for the method isWifiAvailable() of the plugin cordova-diagnostic-plugin-->
             <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
         </config-file>
         <allow-intent href="market:*" />

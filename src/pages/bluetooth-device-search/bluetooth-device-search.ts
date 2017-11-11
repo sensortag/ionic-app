@@ -112,6 +112,11 @@ export class BluetoothDeviceSearchPage {
     }
   }
 
+  /**
+   * Updates the status with the given error.
+   *
+   * @param error
+   */
   private onScanningError(error) {
     this.setStatusMessage('scanning error: ' + error);
   }

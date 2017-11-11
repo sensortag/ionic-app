@@ -2,7 +2,7 @@ import {Component} from "@angular/core";
 import {HTTP, HTTPResponse} from "@ionic-native/http";
 import {Diagnostic} from '@ionic-native/diagnostic';
 import {SettingKeys, SettingsService} from "../../services/settings.service";
-import {IonicPage, Loading, LoadingController, ToastController} from "ionic-angular";
+import {IonicPage, Loading, LoadingController, Platform, ToastController} from "ionic-angular";
 
 
 /**
@@ -31,6 +31,7 @@ export class WifiSensorTagPage {
 
   constructor(private http: HTTP,
               private diagnostic: Diagnostic,
+              private platform: Platform,
               private toastCtrl: ToastController,
               private settings: SettingsService,
               private loadingCtrl: LoadingController) {
@@ -45,25 +46,31 @@ export class WifiSensorTagPage {
    * Get the html page which contains the SensorTag data.
    */
   refreshEvent() {
-    this.diagnostic.isWifiAvailable().then((isWifiAvailable : boolean) => {
-      if (isWifiAvailable) {
+    this.platform.ready().then(() => {
 
-        this.showLoader();
-        this.getWifiSensorData();
+      this.diagnostic.isWifiAvailable().then((isWifiAvailable: boolean) => {
+        if (isWifiAvailable) {
 
-      } else {
+          this.showLoader();
+          this.getWifiSensorData();
 
-        let toast = this.toastCtrl.create({
-          message: 'Please enable wifi!',
-          duration: 4000
-        });
-        toast.present();
+        } else {
 
-      }
+          let toast = this.toastCtrl.create({
+            message: 'Please enable wifi!',
+            duration: 4000
+          });
+          toast.present();
 
-    }).catch((error) =>
-      this.error = 'Error during check if wifi is enabled: ' + error
-    )
+        }
+
+      }).catch((error) =>
+        this.error = 'Error during check if wifi is enabled: ' + error
+      );
+
+    }).catch(() =>
+      this.error = 'Platform not ready'
+    );
   }
 
   /**

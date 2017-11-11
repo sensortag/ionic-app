@@ -45,8 +45,8 @@ export class WifiSensorTagPage {
    * Get the html page which contains the SensorTag data.
    */
   refreshEvent() {
-    this.diagnostic.isWifiEnabled().then((wifiEnabled) => {
-      if (wifiEnabled) {
+    this.diagnostic.isWifiAvailable().then((isWifiAvailable : boolean) => {
+      if (isWifiAvailable) {
 
         this.showLoader();
         this.getWifiSensorData();

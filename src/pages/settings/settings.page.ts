@@ -15,16 +15,21 @@ export class SettingsPage {
   private config: FormGroup;
 
   constructor(private formBuilder: FormBuilder,
-              private configuration: SettingsService,
+              private settingsService: SettingsService,
               private toastCtrl: ToastController) {
 
     this.config = this.formBuilder.group({
-      ipAddress: ['0.0.0.0', Validators.required]
+      ipAddress: ['0.0.0.0', Validators.required],
+      bluetoothFilter:[1, Validators.required]
     });
 
-    this.configuration.getSetting(SettingKeys.IP_ADDRESS).then(value => {
-      this.config.setValue({ipAddress: value});
-    })
+    this.settingsService.getSetting(SettingKeys.IP_ADDRESS).then(value => {
+      this.config.patchValue({ipAddress: <boolean> value});
+    });
+
+    this.settingsService.getSetting(SettingKeys.IS_BLUETOOTH_FILTER_ON).then(value => {
+      this.config.patchValue({bluetoothFilter: value});
+    });
 
   }
 
@@ -32,7 +37,9 @@ export class SettingsPage {
    * Save settings.
    */
   saveEvent() {
-    this.configuration.setSetting(SettingKeys.IP_ADDRESS, this.config.value.ipAddress);
+    this.settingsService.setSetting(SettingKeys.IP_ADDRESS, this.config.value.ipAddress);
+    this.settingsService.setSetting(SettingKeys.IS_BLUETOOTH_FILTER_ON, this.config.value.bluetoothFilter);
+
     let toast = this.toastCtrl.create({
       message: 'settings saved',
       duration: 3000

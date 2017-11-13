@@ -3,7 +3,7 @@ import {Injectable} from "@angular/core";
 
 export class SettingKeys {
   public static IP_ADDRESS = 'IP_ADDRESS';
-
+  public static IS_BLUETOOTH_FILTER_ON = 'IS_BLUETOOTH_FILTER_ON';
 }
 
 /**
@@ -15,12 +15,12 @@ export class SettingsService {
 
   }
 
-  public getSetting(key: string): Promise<string> {
+  public getSetting(key: string): Promise<any> {
     return this.storage.get(key);
   }
 
   //TODO return promise
-  public setSetting(key: string, value: string) {
+  public setSetting(key: string, value: any) {
     this.storage.ready().then(() => {
       this.storage.set(key.toString(), value)
         .catch(() => {

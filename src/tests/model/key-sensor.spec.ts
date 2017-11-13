@@ -1,4 +1,4 @@
-import {KeySensor} from "../../../pages/model/key-sensor";
+import {KeySensor} from "../../pages/model/key-sensor";
 
 describe('key-sensor', () => {
   let keySensor: KeySensor;

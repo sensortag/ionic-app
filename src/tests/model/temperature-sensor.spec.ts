@@ -1,4 +1,4 @@
-import {TemperatureSensor} from "../../../pages/model/temperature-sensor";
+import {TemperatureSensor} from "../../pages/model/temperature-sensor";
 
 describe('temperature-sensor', () => {
   let temperatureSensor: TemperatureSensor;

@@ -1,7 +1,8 @@
-import {Component} from "@angular/core";
+import {Component, NgZone} from "@angular/core";
 import {HTTP, HTTPResponse} from "@ionic-native/http";
+import {Diagnostic} from '@ionic-native/diagnostic';
 import {SettingKeys, SettingsService} from "../../services/settings.service";
-import {IonicPage, Loading, LoadingController} from "ionic-angular";
+import {IonicPage, Loading, LoadingController, Platform, ToastController} from "ionic-angular";
 
 
 /**
@@ -24,11 +25,13 @@ export class WifiSensorTagPage {
   private light: string = '0.0';
   private ipAddress: string = '0.0.0.0';
 
-  private status: number;
-  private error: string = '-';
+  private status: string = '-';
   private loader: Loading;
 
   constructor(private http: HTTP,
+              private diagnostic: Diagnostic,
+              private platform: Platform,
+              private toastCtrl: ToastController,
               private settings: SettingsService,
               private loadingCtrl: LoadingController) {
 
@@ -42,22 +45,49 @@ export class WifiSensorTagPage {
    * Get the html page which contains the SensorTag data.
    */
   refreshEvent() {
-    this.showLoader();
+    this.platform.ready().then(() => {
+
+      this.diagnostic.isWifiAvailable().then((isWifiAvailable: boolean) => {
+        if (isWifiAvailable) {
+
+          this.showLoader();
+          this.getWifiSensorData();
+
+        } else {
+
+          let toast = this.toastCtrl.create({
+            message: 'Please enable wifi!',
+            duration: 4000
+          });
+          toast.present();
+
+        }
+
+      }).catch((error) =>
+        this.status = 'Error during check if wifi is enabled: ' + error
+      );
+
+    }).catch(() =>
+      this.status = 'Platform not ready!'
+    );
+  }
+
+  /**
+   * Tries to get the wifi sensor data.
+   */
+  private getWifiSensorData() {
     this.http.get('http://' + this.ipAddress + '/param_sensortag_poll.html', {}, {})
       .then(response => {
         this.dismissLoader();
-        this.status = response.status;
-        this.error = "";
+        this.status = response.status.toString();
 
         this.parseHtmlFile(response);
       })
       .catch(error => {
         this.dismissLoader();
-        this.status = error.status;
-        this.error = error.error;
+        this.status = error.status.toString() + ': ' + error.error;
 
       });
-
   }
 
   /**
@@ -87,6 +117,9 @@ export class WifiSensorTagPage {
 
   }
 
+  /**
+   * Shows loading symbol.
+   */
   private showLoader() {
     this.loader = this.loadingCtrl.create({
       content: "Please wait...",
@@ -94,6 +127,9 @@ export class WifiSensorTagPage {
     this.loader.present();
   }
 
+  /**
+   * Removes loading symbol.
+   */
   private dismissLoader() {
     this.loader.dismiss();
   }

@@ -8,11 +8,16 @@
 </ion-header>
 
 <ion-content padding>
-  <h3>Wifi Settings</h3>
   <form [formGroup]="config" (ngSubmit)="saveEvent()">
+    <h3>Wifi Settings</h3>
     <ion-item>
       <ion-label floating>IP-Address</ion-label>
       <ion-input type="text" formControlName="ipAddress"></ion-input>
+    </ion-item>
+    <h3>Bluetooth Settings</h3>
+    <ion-item>
+      <ion-label text-wrap>Toggle scan filter for «CC2650 SensorTag»</ion-label>
+      <ion-toggle type="button" formControlName="bluetoothFilter"></ion-toggle>
     </ion-item>
     <button ion-button block type="submit" [disabled]="!config.valid">Save</button>
   </form>

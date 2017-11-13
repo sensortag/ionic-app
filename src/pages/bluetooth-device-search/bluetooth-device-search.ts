@@ -1,8 +1,9 @@
 import {Component, NgZone} from '@angular/core';
-import {IonicPage, NavController, ToastController, Platform} from 'ionic-angular';
+import {IonicPage, NavController, Platform, ToastController} from 'ionic-angular';
 import {BluetoothDevice} from "../model/device";
 import {BLE} from "@ionic-native/ble";
 import {Diagnostic} from '@ionic-native/diagnostic';
+import {SettingKeys, SettingsService} from "../../services/settings.service";
 
 /**
  * Page to scan for bluetooth devices.
@@ -20,14 +21,21 @@ export class BluetoothDeviceSearchPage {
   private scanningTime: number = 10; // time in s
   private toastTime: number = 4000; // time in ms
   private status: string;
+  private isFilterOn: boolean = false;
 
   private devices: Array<BluetoothDevice> = [];
 
   constructor(public navCtrl: NavController,
               private platform: Platform,
+              private settingsService: SettingsService,
               private diagnostic: Diagnostic,
               private ble: BLE, public toastCtrl: ToastController,
               private ngZone: NgZone) {
+
+    this.settingsService.getSetting(SettingKeys.IS_BLUETOOTH_FILTER_ON).then(value => {
+      this.isFilterOn = value;
+    });
+
   }
 
   /**
@@ -107,7 +115,7 @@ export class BluetoothDeviceSearchPage {
    * @param {BluetoothDevice} device
    */
   private onDeviceFound(device: BluetoothDevice) {
-    if (device.name === this.deviceName) {
+    if (!this.isFilterOn || (device.name === this.deviceName)) {
       this.ngZone.run(() => this.devices.push(device));
     }
   }

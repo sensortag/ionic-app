@@ -9,6 +9,8 @@ import {BLEMock} from "../mocks/ble-mock";
 import {DiagnosticMock} from "../mocks/diagnostic-mock";
 import {By} from "@angular/platform-browser/";
 import {DebugElement} from "@angular/core";
+import {SettingsService} from "../../services/settings.service";
+import {IonicStorageModule} from "@ionic/storage";
 
 describe('BluetoothDeviceSearchPage', () => {
   let fixture: ComponentFixture<BluetoothDeviceSearchPage>;
@@ -19,10 +21,12 @@ describe('BluetoothDeviceSearchPage', () => {
     TestBed.configureTestingModule({
       declarations: [BluetoothDeviceSearchPage],
       imports: [
-        IonicModule.forRoot(BluetoothDeviceSearchPage)
+        IonicModule.forRoot(BluetoothDeviceSearchPage),
+        IonicStorageModule.forRoot(),
       ],
       providers: [
         NavController,
+        SettingsService,
         {provide: Platform, useClass: PlatformMock},
         {provide: BLE, useClass: BLEMock},
         {provide: Diagnostic, useClass: DiagnosticMock},
@@ -32,17 +36,31 @@ describe('BluetoothDeviceSearchPage', () => {
 
   beforeEach(() => {
     fixture = TestBed.createComponent(BluetoothDeviceSearchPage);
+    fixture.autoDetectChanges(true);
     component = fixture.componentInstance;
+    status = fixture.debugElement.query(By.css('ion-footer p'));
   });
 
   it('should be created', () => {
     expect(component instanceof BluetoothDeviceSearchPage).toBe(true);
   });
 
-  it('should start scanning', () => {
-    fixture.detectChanges();
-    status = fixture.debugElement.query(By.css('p'));
+  it('should have status: "Status:"', () => {
     expect(status.nativeElement.textContent.trim()).toBe("Status:");
+  });
+
+  it('should have status: "Status: start scanning"', () => {
+    let platform = fixture.debugElement.injector.get(Platform)
+    spyOn(platform, 'is');
+
+    let scanButton = fixture.debugElement.query(By.css('ion-footer button'));
+    scanButton.triggerEventHandler('click',null);
+
+    expect(platform.is).toHaveBeenCalled();
+
+
+
+
   });
 
 });

@@ -2,6 +2,7 @@ import {Storage} from '@ionic/storage';
 import {Injectable} from "@angular/core";
 
 export class SettingKeys {
+  public static IS_STORAGE_INITIALIZED = 'IS_STORAGE_INITIALIZED';
   public static IP_ADDRESS = 'IP_ADDRESS';
   public static IS_BLUETOOTH_FILTER_ON = 'IS_BLUETOOTH_FILTER_ON';
 }

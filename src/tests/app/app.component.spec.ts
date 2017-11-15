@@ -5,7 +5,7 @@ import {StatusBar} from '@ionic-native/status-bar';
 import {SplashScreen} from '@ionic-native/splash-screen';
 
 import {MyApp} from '../../app/app.component';
-import {PlatformMock, SplashScreenMock, StatusBarMock} from '../../../test-config/mocks-ionic';
+import {PlatformMock, SplashScreenMock, StatusBarMock} from '../mocks/mocks-ionic';
 
 describe('MyApp Component', () => {
   let fixture;

@@ -24,63 +24,6 @@ export class BLEMock extends BLE {
   };
 
   /**
-   * Scan and discover BLE peripherals until `stopScan` is called.
-   *
-   * @usage
-   * ```
-   * BLE.startScan([]).subscribe(device => {
-       *   console.log(JSON.stringify(device));
-       * });
-   *
-   * setTimeout(() => {
-       *   BLE.stopScan();
-       * }, 5000);
-   * ```
-   * @param {string[]} services  List of service UUIDs to discover, or `[]` to find all devices
-   * @returns {Observable<any>} Returns an Observable that notifies of each peripheral discovered.
-   */
-
-  startScan(services: string[]): Observable<any> {
-    return Observable.create((observer: Observer<any>) => {
-      observer.next('');
-      observer.complete();
-    });
-  }
-
-  /**
-   * Scans for BLE devices. This function operates similarly to the `startScan` function, but allows you to specify extra options (like allowing duplicate device reports).
-   * @param {string[]} services  List of service UUIDs to discover, or `[]` to find all devices
-   * @param options {any}
-   * @returns {Observable<any>} Returns an Observable that notifies of each peripheral discovered.
-   */
-  startScanWithOptions(services: string[], options: { reportDuplicates?: boolean; } | any): Observable<any> {
-    return Observable.create((observer: Observer<any>) => {
-      observer.next('');
-      observer.complete();
-    });
-  }
-
-  /**
-   * Stop a scan started by `startScan`.
-   *
-   * @usage
-   * ```
-   * BLE.startScan([]).subscribe(device => {
-       *   console.log(JSON.stringify(device));
-       * });
-   * setTimeout(() => {
-       *   BLE.stopScan().then(() => { console.log('scan stopped'); });
-       * }, 5000);
-   * ```
-   * @return returns a Promise.
-   */
-  stopScan(): Promise<any> {
-    return new Promise((resolve, reject) => {
-      resolve();
-    });
-  }
-
-  /**
    * Connect to a peripheral.
    * @usage
    * ```
@@ -93,17 +36,6 @@ export class BLEMock extends BLE {
    * ```
    * @param deviceId {string}  UUID or MAC address of the peripheral
    * @return Returns an Observable that notifies of connect/disconnect.
-   */
-  /**
-   * Disconnect from a peripheral.
-   * @usage
-   * ```
-   *   BLE.disconnect('12:34:56:78:9A:BC').then(() => {
-  *     console.log('Disconnected');
-  *   });
-   * ```
-   * @param deviceId {string}  UUID or MAC address of the peripheral
-   * @return Returns a Promise
    */
   connect(deviceId: string): Observable<any> {
     return Observable.create((observer: Observer<any>) => {
@@ -178,21 +110,6 @@ export class BLEMock extends BLE {
   }
 
   /**
-   * Write the value of a characteristic without waiting for confirmation from the peripheral.
-   *
-   * @param {string} deviceId  UUID or MAC address of the peripheral
-   * @param {string} serviceUUID  UUID of the BLE service
-   * @param {string} characteristicUUID  UUID of the BLE characteristic
-   * @param {ArrayBuffer} value  Data to write to the characteristic, as an ArrayBuffer.
-   * @return Returns a Promise
-   */
-  writeWithoutResponse(deviceId: string, serviceUUID: string, characteristicUUID: string, value: ArrayBuffer): Promise<any> {
-    return new Promise((resolve, reject) => {
-      resolve();
-    });
-  }
-
-  /**
    * Register to be notified when the value of a characteristic changes.
    *
    * @usage
@@ -211,20 +128,6 @@ export class BLEMock extends BLE {
     return Observable.create((observer: Observer<any>) => {
       observer.next('');
       observer.complete();
-    });
-  }
-
-  /**
-   * Stop being notified when the value of a characteristic changes.
-   *
-   * @param {string} deviceId  UUID or MAC address of the peripheral
-   * @param {string} serviceUUID  UUID of the BLE service
-   * @param {string} characteristicUUID  UUID of the BLE characteristic
-   * @returns {Promise<any>}
-   */
-  stopNotification(deviceId: string, serviceUUID: string, characteristicUUID: string): Promise<any> {
-    return new Promise((resolve, reject) => {
-      resolve();
     });
   }
 
@@ -275,12 +178,6 @@ export class BLEMock extends BLE {
    * @returns {Promise<any>}
    */
   enable(): Promise<any> {
-    return new Promise((resolve, reject) => {
-      resolve();
-    });
-  }
-
-  static readRSSI(deviceId: string): Promise<any> {
     return new Promise((resolve, reject) => {
       resolve();
     });

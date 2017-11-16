@@ -46,11 +46,13 @@ export class BleScanService {
         } else {
           return Promise.reject('Please enable the location service');
         }
-      }).catch((error) => {
+      }, (error) => {
         return Promise.reject('Error checking location service: ' + error);
       });
-    }).catch(() => {
-      return Promise.reject(this.enableBluetoothMessage);
+    },() => {
+        return Promise.reject(this.enableBluetoothMessage);
+    }).catch(error => {
+      return Promise.reject(error);
     });
   }
 

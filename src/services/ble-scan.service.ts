@@ -9,8 +9,9 @@ import {Observable} from "rxjs/Observable";
  */
 @Injectable()
 export class BleScanService {
+
   private enableBluetoothMessage = 'Please enable bluetooth!';
-  private scanningTime: number = 10; // time in s
+  private _scanningTime: number = 10; // time in s
 
   constructor(private platform: Platform,
               private diagnostic: Diagnostic,
@@ -18,6 +19,11 @@ export class BleScanService {
 
   }
 
+  /**
+   * Stars scanning for bluetooth low energy devices.
+   *
+   * @returns {Observable<any>}
+   */
   startScanningForBleDevices(): Observable<any> {
     let osServicesReady: Promise<any>;
     return new Observable(observer => {
@@ -29,14 +35,35 @@ export class BleScanService {
         observer.error('Platform not supported');
       }
       if (osServicesReady != null) {
-        osServicesReady.then(() => this.startScanning(observer))
+        osServicesReady
+          .then(() => this.startScanning(observer))
           .catch(error => observer.error(error));
       }
     });
   }
 
   /**
+   * Returns the scanning time in seconds.
+   *
+   * @returns {number}
+   */
+  get scanningTime(): number {
+    return this._scanningTime;
+  }
+
+  /**
+   * Set scanning time in seconds.
+   *
+   * @param {number} value
+   */
+  set scanningTime(value: number) {
+    this._scanningTime = value;
+  }
+
+  /**
    *  Checks if bluetooth and the location service is enabled.
+   *
+   * @returns {Promise<any>}
    */
   private isAndroidReadyForScanning(): Promise<any> {
     return this.ble.enable().then(() => {
@@ -58,6 +85,8 @@ export class BleScanService {
 
   /**
    * Checks if bluetooth is enabled.
+   *
+   * @returns {Promise<any>}
    */
   private isIOSReadyForScanning(): Promise<any> {
     return this.ble.isEnabled().then(() => {
@@ -71,7 +100,7 @@ export class BleScanService {
    * Scans for bluetooth devices.
    */
   private startScanning(observer) {
-    this.ble.scan([], this.scanningTime).subscribe(
+    this.ble.scan([], this._scanningTime).subscribe(
       device => observer.next(device),
       error => observer.error(error)
     );
@@ -79,7 +108,7 @@ export class BleScanService {
     // because complete of ble.scan(..).subscribe is never called
     setTimeout(() => {
       observer.complete();
-    }, this.scanningTime * 1000);
+    }, this._scanningTime * 1000);
   }
 
 

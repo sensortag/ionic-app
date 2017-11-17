@@ -41,9 +41,12 @@ export class BluetoothSensorTagPage {
   private humiditySensor = new HumiditySensor();
   private opticalSensor = new OpticalSensor();
 
-  constructor(private navCtrl: NavController, private navParams: NavParams,
-              private toastCtrl: ToastController, private ble: BLE,
+  constructor(private navCtrl: NavController,
+              private navParams: NavParams,
+              private toastCtrl: ToastController,
+              private ble: BLE,
               private ngZone: NgZone) {
+
     this.device = navParams.data;
 
     this.ble.connect(this.device.id).subscribe(

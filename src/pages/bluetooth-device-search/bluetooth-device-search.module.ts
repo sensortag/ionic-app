@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {IonicPageModule} from 'ionic-angular';
-import {BluetoothDeviceSearchPage} from './bluetooth-device-search';
+import {BluetoothDeviceSearchPage} from './bluetooth-device-search.page';
 import {BLE} from "@ionic-native/ble";
 import {Diagnostic} from '@ionic-native/diagnostic';
 import {BleScanService} from "../../services/ble-scan.service";

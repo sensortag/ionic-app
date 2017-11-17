@@ -4,7 +4,7 @@ import {BLE} from "@ionic-native/ble";
 import {Diagnostic} from '@ionic-native/diagnostic';
 
 import {PlatformMock} from '../mocks/mocks-ionic';
-import {BluetoothDeviceSearchPage} from "../../pages/bluetooth-device-search/bluetooth-device-search";
+import {BluetoothDeviceSearchPage} from "../../pages/bluetooth-device-search/bluetooth-device-search.page";
 import {BLEMock} from "../mocks/ble-mock";
 import {DiagnosticMock} from "../mocks/diagnostic-mock";
 import {By} from "@angular/platform-browser/";

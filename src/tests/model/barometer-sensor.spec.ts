@@ -1,4 +1,4 @@
-import {BarometerSensor} from "../../pages/model/barometer-sensor";
+import {BarometerSensor} from "../../pages/bluetooth-model/barometer-sensor";
 
 describe('barometer-sensor', () => {
   let barometerSensor: BarometerSensor;

@@ -1,4 +1,4 @@
-import {OpticalSensor} from "../../../pages/model/optical-sensor";
+import {OpticalSensor} from "../../pages/bluetooth-model/optical-sensor";
 
 describe('optical-sensor', () => {
   let opticalSensor: OpticalSensor;

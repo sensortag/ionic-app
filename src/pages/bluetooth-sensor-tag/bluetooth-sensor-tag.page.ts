@@ -1,13 +1,13 @@
 import {Component, NgZone} from "@angular/core";
 import {BLE} from "@ionic-native/ble";
 import {IonicPage, NavController, NavParams, ToastController} from "ionic-angular";
-import {BluetoothDevice} from "../model/device";
-import {MovementSensor} from "../model/movment-sensor";
-import {BarometerSensor} from "../model/barometer-sensor";
-import {KeySensor} from "../model/key-sensor";
-import {TemperatureSensor} from "../model/temperature-sensor";
-import {HumiditySensor} from "../model/humidity-sensor";
-import {OpticalSensor} from "../model/optical-sensor";
+import {BluetoothDevice} from "../bluetooth-model/bluetooth-device";
+import {MovementSensor} from "../bluetooth-model/movment-sensor";
+import {BarometerSensor} from "../bluetooth-model/barometer-sensor";
+import {KeySensor} from "../bluetooth-model/key-sensor";
+import {TemperatureSensor} from "../bluetooth-model/temperature-sensor";
+import {HumiditySensor} from "../bluetooth-model/humidity-sensor";
+import {OpticalSensor} from "../bluetooth-model/optical-sensor";
 
 /**
  *  Handles the communication with the selected bluetooth device.
@@ -41,9 +41,12 @@ export class BluetoothSensorTagPage {
   private humiditySensor = new HumiditySensor();
   private opticalSensor = new OpticalSensor();
 
-  constructor(private navCtrl: NavController, private navParams: NavParams,
-              private toastCtrl: ToastController, private ble: BLE,
+  constructor(private navCtrl: NavController,
+              private navParams: NavParams,
+              private toastCtrl: ToastController,
+              private ble: BLE,
               private ngZone: NgZone) {
+
     this.device = navParams.data;
 
     this.ble.connect(this.device.id).subscribe(

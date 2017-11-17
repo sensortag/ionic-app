@@ -74,6 +74,7 @@ export class BluetoothDeviceSearchPage {
    */
   private onScanningError(error) {
     this.toast(error);
+    this.setStatusMessage('scanning error');
   }
 
   /**

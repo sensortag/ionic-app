@@ -74,7 +74,7 @@ describe('BluetoothDeviceSearchPage', () => {
       expect(ble.scan).toHaveBeenCalled();
       expect(status.nativeElement.textContent.trim()).toBe("Status: scanning");
       done();
-    },3000)
+    }, 500)
   })
 
 })

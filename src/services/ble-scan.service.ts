@@ -5,6 +5,7 @@ import {Diagnostic} from "@ionic-native/diagnostic";
 import {Observable} from "rxjs/Observable";
 
 /**
+ *  Service to scan for bluetooth low energy devices.
  *
  */
 @Injectable()
@@ -26,7 +27,9 @@ export class BleScanService {
    */
   startScanningForBleDevices(): Observable<any> {
     let osServicesReady: Promise<any>;
+
     return new Observable(observer => {
+
       if (this.platform.is('android')) {
         osServicesReady = this.isAndroidReadyForScanning()
       } else if (this.platform.is('ios')) {
@@ -34,6 +37,7 @@ export class BleScanService {
       } else {
         observer.error('Platform not supported');
       }
+
       if (osServicesReady != null) {
         osServicesReady
           .then(() => this.startScanning(observer))

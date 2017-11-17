@@ -3,6 +3,7 @@ import {IonicPageModule} from 'ionic-angular';
 import {BluetoothDeviceSearchPage} from './bluetooth-device-search';
 import {BLE} from "@ionic-native/ble";
 import {Diagnostic} from '@ionic-native/diagnostic';
+import {BleScanService} from "../../services/ble-scan.service";
 
 @NgModule({
   declarations: [
@@ -14,6 +15,7 @@ import {Diagnostic} from '@ionic-native/diagnostic';
   providers: [
     BLE,
     Diagnostic,
+    BleScanService,
   ]
 })
 export class BluetoothDeviceSearchPageModule {

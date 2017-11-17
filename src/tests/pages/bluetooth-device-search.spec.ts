@@ -11,6 +11,7 @@ import {By} from "@angular/platform-browser/";
 import {DebugElement} from "@angular/core";
 import {SettingsService} from "../../services/settings.service";
 import {IonicStorageModule} from "@ionic/storage";
+import {BleScanService} from "../../services/ble-scan.service";
 
 describe('BluetoothDeviceSearchPage', () => {
   let fixture: ComponentFixture<BluetoothDeviceSearchPage>;
@@ -28,6 +29,7 @@ describe('BluetoothDeviceSearchPage', () => {
       providers: [
         NavController,
         SettingsService,
+        BleScanService,
         {provide: Platform, useClass: PlatformMock},
         {provide: BLE, useClass: BLEMock},
         {provide: Diagnostic, useClass: DiagnosticMock},

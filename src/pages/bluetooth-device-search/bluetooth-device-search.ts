@@ -1,9 +1,8 @@
 import {Component, NgZone} from '@angular/core';
-import {IonicPage, NavController, Platform, ToastController} from 'ionic-angular';
+import {IonicPage, NavController, ToastController} from 'ionic-angular';
 import {BluetoothDevice} from "../model/device";
-import {BLE} from "@ionic-native/ble";
-import {Diagnostic} from '@ionic-native/diagnostic';
 import {SettingKeys, SettingsService} from "../../services/settings.service";
+import {BleScanService} from "../../services/ble-scan.service";
 
 /**
  * Page to scan for bluetooth devices.
@@ -16,20 +15,18 @@ import {SettingKeys, SettingsService} from "../../services/settings.service";
   templateUrl: 'bluetooth-device-search.html',
 })
 export class BluetoothDeviceSearchPage {
-  private deviceName: string = 'CC2650 SensorTag';
-  private enableBluetoothMessage = 'Please enable bluetooth!';
-  private scanningTime: number = 10; // time in s
-  private toastTime: number = 4000; // time in ms
-  private status: string;
   private isFilterOn: boolean = false;
 
+  private deviceName: string = 'CC2650 SensorTag';
+  private toastTime: number = 4000; // time in ms
+  private status: string;
   private devices: Array<BluetoothDevice> = [];
 
-  constructor(public navCtrl: NavController,
-              private platform: Platform,
+
+  constructor(private bleScanService: BleScanService,
+              private navCtrl: NavController,
               private settingsService: SettingsService,
-              private diagnostic: Diagnostic,
-              private ble: BLE, public toastCtrl: ToastController,
+              private toastCtrl: ToastController,
               private ngZone: NgZone) {
 
     this.settingsService.getSetting(SettingKeys.IS_BLUETOOTH_FILTER_ON).then(value => {
@@ -44,13 +41,12 @@ export class BluetoothDeviceSearchPage {
    */
   scanForDevices() {
     this.resetList();
-    if (this.platform.is('android')) {
-      this.startScanningOnAndroid();
-    } else if (this.platform.is('ios')) {
-      this.startScanningOnIOS();
-    } else {
-      this.toast('Platform not supported')
-    }
+    this.setStatusMessage('scanning');
+    this.bleScanService.startScanningForBleDevices().subscribe(
+      device => this.onDeviceFound(device),
+      error => this.onScanningError(error),
+      () => this.onScanningComplete(),
+    );
 
   }
 
@@ -59,55 +55,6 @@ export class BluetoothDeviceSearchPage {
    */
   deviceSelected(device: BluetoothDevice) {
     this.navCtrl.push('BluetoothSensorTagPage', device)
-  }
-
-  /**
-   *  Checks if bluetooth and the location service is enabled.
-   *  If both are enabled the scanning for ble devices is started.
-   */
-  private startScanningOnAndroid() {
-    this.ble.enable().then(() => {
-      this.diagnostic.isLocationEnabled().then((locationEnabled) => {
-        if (locationEnabled) {
-          this.startScanning()
-        } else {
-          this.toast('Please enable the location service')
-        }
-      }).catch((error) =>
-        this.toast('Error checking location service: ' + error)
-      )
-    }).catch(() => {
-      this.toast(this.enableBluetoothMessage)
-    });
-  }
-
-  /**
-   * Checks if bluetooth is enabled.
-   * If it is enabled the scanning for ble devices is started.
-   */
-  private startScanningOnIOS() {
-    this.ble.isEnabled().then(() =>
-      this.startScanning()
-    ).catch(() =>
-      this.toast(this.enableBluetoothMessage)
-    );
-  }
-
-  /**
-   * Scans for bluetooth devices.
-   */
-  private startScanning() {
-    this.setStatusMessage('scanning');
-
-    this.ble.scan([], this.scanningTime).subscribe(
-      device => this.onDeviceFound(device),
-      error => this.onScanningError(error)
-    );
-    // set a timeout function to reset the status,
-    // because complete of ble.scan(..).subscribe is never called
-    setTimeout(() => {
-      this.setStatusMessage('scanning completed');
-    }, this.scanningTime * 1000);
   }
 
   /**
@@ -121,12 +68,20 @@ export class BluetoothDeviceSearchPage {
   }
 
   /**
-   * Updates the status with the given error.
+   * Create a toast with the error.
    *
    * @param error
    */
   private onScanningError(error) {
-    this.setStatusMessage('scanning error: ' + error);
+    this.toast(error);
+  }
+
+  /**
+   * Update the status.
+   *
+   */
+  private onScanningComplete() {
+    this.setStatusMessage('scanning finished')
   }
 
   /**

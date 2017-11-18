@@ -107,13 +107,13 @@ export class WifiSensorTagPage {
       this.humidity = doc.getElementById('hum').innerHTML.split(' ')[2];
       this.pressure = doc.getElementById('bar').innerHTML.split(' ')[3];
       this.acceleration = 'X: ' + doc.getElementById('acc').innerHTML.split(' ')[3]
-        + ' Y:' + doc.getElementById('acc').innerHTML.split(' ')[4]
+        + ' Y: ' + doc.getElementById('acc').innerHTML.split(' ')[4]
         + ' Z: ' + doc.getElementById('acc').innerHTML.split(' ')[5];
       this.gyroscope = 'X: ' + doc.getElementById('gyr').innerHTML.split(' ')[3]
-        + ' Y:' + doc.getElementById('gyr').innerHTML.split(' ')[4]
+        + ' Y: ' + doc.getElementById('gyr').innerHTML.split(' ')[4]
         + ' Z: ' + doc.getElementById('gyr').innerHTML.split(' ')[5];
       this.magnetometer = 'X: ' + doc.getElementById('mag').innerHTML.split(' ')[3]
-        + ' Y:' + doc.getElementById('mag').innerHTML.split(' ')[4]
+        + ' Y: ' + doc.getElementById('mag').innerHTML.split(' ')[4]
         + ' Z: ' + doc.getElementById('mag').innerHTML.split(' ')[5];
       this.keyPressed = doc.getElementById('key').innerHTML;
       this.light = doc.getElementById('opt').innerHTML.split(' ')[1];

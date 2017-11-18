@@ -7,7 +7,7 @@ import {BLE} from "@ionic-native/ble";
 import {BLEMock} from "../mocks/ble-mock";
 import {BleScanService} from "../../services/ble-scan.service";
 import {Observable} from "rxjs/Observable";
-import {BluetoothDevice} from "../../pages/bluetooth-model/bluetooth-device";
+import {BluetoothDevice} from "../../pages/model/bluetooth/bluetooth-device";
 
 describe('BLE scan service', () => {
   let ble : BLE;

@@ -1,4 +1,4 @@
-import {HumiditySensor} from "../../pages/bluetooth-model/humidity-sensor";
+import {HumiditySensor} from "../../pages/model/bluetooth/humidity-sensor";
 
 describe('humidity-sensor', () => {
   let humiditySensor: HumiditySensor;

@@ -1,13 +1,13 @@
 import {Component, NgZone} from "@angular/core";
 import {BLE} from "@ionic-native/ble";
 import {IonicPage, NavController, NavParams, ToastController} from "ionic-angular";
-import {BluetoothDevice} from "../bluetooth-model/bluetooth-device";
-import {MovementSensor} from "../bluetooth-model/movment-sensor";
-import {BarometerSensor} from "../bluetooth-model/barometer-sensor";
-import {KeySensor} from "../bluetooth-model/key-sensor";
-import {TemperatureSensor} from "../bluetooth-model/temperature-sensor";
-import {HumiditySensor} from "../bluetooth-model/humidity-sensor";
-import {OpticalSensor} from "../bluetooth-model/optical-sensor";
+import {BluetoothDevice} from "../model/bluetooth/bluetooth-device";
+import {MovementSensor} from "../model/bluetooth/movment-sensor";
+import {BarometerSensor} from "../model/bluetooth/barometer-sensor";
+import {KeySensor} from "../model/bluetooth/key-sensor";
+import {TemperatureSensor} from "../model/bluetooth/temperature-sensor";
+import {HumiditySensor} from "../model/bluetooth/humidity-sensor";
+import {OpticalSensor} from "../model/bluetooth/optical-sensor";
 
 /**
  *  Handles the communication with the selected bluetooth device.

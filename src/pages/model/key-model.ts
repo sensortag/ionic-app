@@ -1,22 +1,10 @@
-import {Sensor} from "./sensor";
-
 /**
- * The simple key sensor in the SensorTag.
- * http://processors.wiki.ti.com/index.php/CC2650_SensorTag_User's_Guide#Simple_Keys_Service
+ * Used to parse the raw value of the pressed key.
  */
-export class KeySensor extends Sensor {
+export class KeyModel {
   private leftKey: boolean = false;
   private rightKey: boolean = false;
   private reedRelay: boolean = false;
-
-  constructor() {
-    super(
-      '0000ffe0-0000-1000-8000-00805f9b34fb',
-      '0000ffe1-0000-1000-8000-00805f9b34fb',
-      '',
-      ''
-    );
-  }
 
   getKeyAsString(): string {
     let keys: string = '';
@@ -42,11 +30,4 @@ export class KeySensor extends Sensor {
     this.reedRelay = (rawData[0] & 0x04) == 0x04;
   }
 
-  /**
-   * no configuration
-   * @returns {ArrayBuffer}
-   */
-  getConfigurationValue(): ArrayBuffer {
-    return new Uint8Array(0).buffer;
-  }
 }

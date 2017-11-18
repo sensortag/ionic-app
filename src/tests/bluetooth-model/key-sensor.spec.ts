@@ -1,4 +1,4 @@
-import {KeySensor} from "../../pages/bluetooth-model/key-sensor";
+import {KeySensor} from "../../pages/model/bluetooth/key-sensor";
 
 describe('key-sensor', () => {
   let keySensor: KeySensor;

@@ -3,6 +3,7 @@ import {HTTP, HTTPResponse} from "@ionic-native/http";
 import {Diagnostic} from '@ionic-native/diagnostic';
 import {SettingKeys, SettingsService} from "../../services/settings.service";
 import {IonicPage, Loading, LoadingController, Platform, ToastController} from "ionic-angular";
+import {KeyModel} from "../model/key-model";
 
 
 /**
@@ -24,6 +25,7 @@ export class WifiSensorTagPage {
   private keyPressed: string = '0';
   private light: string = '0.0';
   private ipAddress: string = '0.0.0.0';
+  private keyModel = new KeyModel();
 
   private status: string = '-';
   private loader: Loading;
@@ -115,10 +117,24 @@ export class WifiSensorTagPage {
       this.magnetometer = 'X: ' + doc.getElementById('mag').innerHTML.split(' ')[3]
         + ' Y: ' + doc.getElementById('mag').innerHTML.split(' ')[4]
         + ' Z: ' + doc.getElementById('mag').innerHTML.split(' ')[5];
-      this.keyPressed = doc.getElementById('key').innerHTML;
+
+      this.keyPressed = this.parsePressedKey(doc.getElementById('key').innerHTML);
+
       this.light = doc.getElementById('opt').innerHTML.split(' ')[1];
 
     });
+  }
+
+  /**
+   * Parses the pressed keys to a string.
+   *
+   * @returns {string}
+   */
+  parsePressedKey(pressedKeys: string): string {
+    let data = new Uint8Array(1);
+    data[0] = parseInt(pressedKeys, 10);
+    this.keyModel.convertData(data);
+    return this.keyModel.getKeyAsString();
   }
 
   /**

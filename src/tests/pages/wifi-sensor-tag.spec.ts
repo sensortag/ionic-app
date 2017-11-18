@@ -195,7 +195,7 @@ describe('WifiSensorTagPage', () => {
           '  <p id="acc">1028 0019 FEAD 1.01 0.01 -0.08</p>\n' +
           '  <p id="opt">059F 14.39</p>\n' +
           '  <p id="mag">00A2 01D6 FE9F 162 470 -353</p>\n' +
-          '  <p id="key">0</p>\n' +
+          '  <p id="key">7</p>\n' +
           '  <p id="syn">35</p>\n' +
           '</body>'
         }
@@ -231,7 +231,7 @@ describe('WifiSensorTagPage', () => {
         expect(gyroscope.nativeElement.textContent).toEqual('X: -1.97 Y: 0.71 Z: 1.02 [°/s]');
         expect(magnetometer.nativeElement.textContent).toEqual('X: 162 Y: 470 Z: -353 [uT]');
 
-        expect(keyPressed.nativeElement.textContent).toEqual('0');
+        expect(keyPressed.nativeElement.textContent).toEqual('left key right key reed relay');
         expect(illuminance.nativeElement.textContent).toEqual('14.39 Lux');
 
         done();

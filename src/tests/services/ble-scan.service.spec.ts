@@ -137,12 +137,12 @@ describe('BLE scan service', () => {
     let scanningTime = 0.5; //s
     bleScanService.scanningTime = scanningTime;
 
-    let deviceRecived : boolean;
+    let deviceReceived : boolean;
 
     bleScanService.startScanningForBleDevices().subscribe(
       device => {
         expect(device).toEqual(bluetoothDevice);
-        deviceRecived = true;
+        deviceReceived = true;
       },
       error => {
       },
@@ -151,7 +151,7 @@ describe('BLE scan service', () => {
         expect(ble.enable).toHaveBeenCalled();
         expect(diagnostic.isLocationEnabled).toHaveBeenCalled();
         expect(ble.scan).toHaveBeenCalledWith([], scanningTime);
-        expect(deviceRecived).toBeTruthy('device not received');
+        expect(deviceReceived).toBeTruthy('device not received');
         done();
       },
     )

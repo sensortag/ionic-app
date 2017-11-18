@@ -28,6 +28,5 @@ export class SettingsService {
           console.log('failed to save')
         })
     });
-
   }
 }

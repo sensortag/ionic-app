@@ -33,7 +33,8 @@ export class WifiSensorTagPage {
               private platform: Platform,
               private toastCtrl: ToastController,
               private settings: SettingsService,
-              private loadingCtrl: LoadingController) {
+              private loadingCtrl: LoadingController,
+              private ngZone: NgZone) {
 
     this.settings.getSetting(SettingKeys.IP_ADDRESS).then(value => {
       this.ipAddress = value;
@@ -64,11 +65,11 @@ export class WifiSensorTagPage {
         }
 
       }).catch((error) =>
-        this.status = 'Error during check if wifi is enabled: ' + error
+        this.setStatusMessage('Error during check if wifi is enabled: ' + error)
       );
 
     }).catch(() =>
-      this.status = 'Platform not ready!'
+      this.setStatusMessage('Platform not ready!')
     );
   }
 
@@ -79,13 +80,13 @@ export class WifiSensorTagPage {
     this.http.get('http://' + this.ipAddress + '/param_sensortag_poll.html', {}, {})
       .then(response => {
         this.dismissLoader();
-        this.status = response.status.toString();
+        this.setStatusMessage(response.status.toString());
 
         this.parseHtmlFile(response);
       })
       .catch(error => {
         this.dismissLoader();
-        this.status = error.status.toString() + ': ' + error.error;
+        this.setStatusMessage(error.status.toString() + ': ' + error.error);
 
       });
   }
@@ -99,22 +100,25 @@ export class WifiSensorTagPage {
     let parser = new DOMParser();
     let doc = parser.parseFromString(response.data, 'text/html');
 
-    this.ambientTemperature = doc.getElementById('tmp').innerHTML.split(' ')[3];
-    this.irTemperature = doc.getElementById('tmp').innerHTML.split(' ')[2];
-    this.humidity = doc.getElementById('hum').innerHTML.split(' ')[2];
-    this.pressure = doc.getElementById('bar').innerHTML.split(' ')[3];
-    this.acceleration = 'X: ' + doc.getElementById('acc').innerHTML.split(' ')[3]
-      + ' Y:' + doc.getElementById('acc').innerHTML.split(' ')[4]
-      + ' Z: ' + doc.getElementById('acc').innerHTML.split(' ')[5];
-    this.gyroscope = 'X: ' + doc.getElementById('gyr').innerHTML.split(' ')[3]
-      + ' Y:' + doc.getElementById('gyr').innerHTML.split(' ')[4]
-      + ' Z: ' + doc.getElementById('gyr').innerHTML.split(' ')[5];
-    this.magnetometer = 'X: ' + doc.getElementById('mag').innerHTML.split(' ')[3]
-      + ' Y:' + doc.getElementById('mag').innerHTML.split(' ')[4]
-      + ' Z: ' + doc.getElementById('mag').innerHTML.split(' ')[5];
-    this.keyPressed = doc.getElementById('key').innerHTML;
-    this.light = doc.getElementById('opt').innerHTML.split(' ')[1];
+    this.ngZone.run(() => {
 
+      this.ambientTemperature = doc.getElementById('tmp').innerHTML.split(' ')[3];
+      this.irTemperature = doc.getElementById('tmp').innerHTML.split(' ')[2];
+      this.humidity = doc.getElementById('hum').innerHTML.split(' ')[2];
+      this.pressure = doc.getElementById('bar').innerHTML.split(' ')[3];
+      this.acceleration = 'X: ' + doc.getElementById('acc').innerHTML.split(' ')[3]
+        + ' Y:' + doc.getElementById('acc').innerHTML.split(' ')[4]
+        + ' Z: ' + doc.getElementById('acc').innerHTML.split(' ')[5];
+      this.gyroscope = 'X: ' + doc.getElementById('gyr').innerHTML.split(' ')[3]
+        + ' Y:' + doc.getElementById('gyr').innerHTML.split(' ')[4]
+        + ' Z: ' + doc.getElementById('gyr').innerHTML.split(' ')[5];
+      this.magnetometer = 'X: ' + doc.getElementById('mag').innerHTML.split(' ')[3]
+        + ' Y:' + doc.getElementById('mag').innerHTML.split(' ')[4]
+        + ' Z: ' + doc.getElementById('mag').innerHTML.split(' ')[5];
+      this.keyPressed = doc.getElementById('key').innerHTML;
+      this.light = doc.getElementById('opt').innerHTML.split(' ')[1];
+
+    });
   }
 
   /**
@@ -132,5 +136,14 @@ export class WifiSensorTagPage {
    */
   private dismissLoader() {
     this.loader.dismiss();
+  }
+
+  /**
+   * Sets the status message.
+   *
+   * @param {string} message
+   */
+  private setStatusMessage(message: string) {
+    this.ngZone.run(() => this.status = message);
   }
 }

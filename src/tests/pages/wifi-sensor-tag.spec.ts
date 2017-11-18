@@ -11,8 +11,8 @@ import {DiagnosticMock} from "../mocks/diagnostic-mock";
 import {HTTPMock} from "../mocks/http-mock";
 import {By} from "@angular/platform-browser";
 import {SettingsServiceMock} from "../mocks/settings-service-mock";
-import {ToastMock} from "../mocks/ToastMock";
 import {LoadingControllerMock} from "../mocks/loading-contorller-mock";
+import {ToastControllerMock} from "../mocks/toast-controller-mock";
 
 describe('WifiSensorTagPage', () => {
   let fixture: ComponentFixture<WifiSensorTagPage>;
@@ -35,9 +35,8 @@ describe('WifiSensorTagPage', () => {
       ],
       providers: [
         NavController,
-        ToastController,
+        {provide: ToastController, useFactory: () => ToastControllerMock.instance()},
         {provide: LoadingController, useFactory: () => LoadingControllerMock.instance()},
-        {provide: ToastMock, useClass: ToastMock},
         {provide: SettingsService, useClass: SettingsServiceMock},
         {provide: HTTP, useClass: HTTPMock},
         {provide: Platform, useClass: PlatformMock},
@@ -136,8 +135,6 @@ describe('WifiSensorTagPage', () => {
 
     spyOn(http, 'get');
 
-    spyOn(toastController, 'create').and.returnValue(new ToastMock());
-
     setTimeout(() => {
         expect(platform.ready).toHaveBeenCalled();
         expect(diagnostic.isWifiAvailable).toHaveBeenCalled();
@@ -165,7 +162,7 @@ describe('WifiSensorTagPage', () => {
         status: 404,
         error: 'Not Found',
       }
-      ));
+    ));
 
     setTimeout(() => {
         expect(platform.ready).toHaveBeenCalled();

@@ -86,7 +86,7 @@ export class WifiSensorTagPage {
       })
       .catch(error => {
         this.dismissLoader();
-        this.setStatusMessage(error.status.toString() + ': ' + error.error);
+        this.setStatusMessage(error.status.toString() + ' - ' + error.error);
 
       });
   }

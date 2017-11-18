@@ -6,11 +6,12 @@ import {Sensor} from "./sensor";
  *
  */
 export class MovementSensor extends Sensor {
-  private static _accelerometerRange: number = 2; // 0=2G, 1=4G, 2=8G, 3=16G
-  private gyroscope: Array<number> = new Array(3);
+  private static _accelerometerRange: number = 2; // 0 = 2G, 1 = 4G, 2 = 8G, 3 = 16G
 
+  private gyroscope: Array<number> = new Array(3);
   private accelerometer: Array<number> = new Array(3);
   private magnetometer: Array<number> = new Array(3);
+
   constructor() {
     super(
       'f000aa80-0451-4000-b000-000000000000',
@@ -20,12 +21,24 @@ export class MovementSensor extends Sensor {
     );
   }
 
+  /**
+   * Returns the range of the accelerometer.
+   *
+   * @returns {number} 0 = 2G, 1 = 4G, 2 = 8G, 3 = 16G
+   */
   static get accelerometerRange(): number {
     return this._accelerometerRange;
   }
 
+  /**
+   * Set the range of the accelerometer.
+   *
+   * @param {number} value 0 = 2G, 1 = 4G, 2 = 8G, 3 = 16G
+   */
   static set accelerometerRange(value: number) {
-    this._accelerometerRange = value;
+    if (value => 0 && value <= 3) {
+      this._accelerometerRange = value;
+    }
   }
 
   getMagnetometerAsString(): string {
@@ -50,6 +63,7 @@ export class MovementSensor extends Sensor {
   }
 
   /**
+   * Converts the movement sensor data.
    *
    * @param data 18Bytes = 9*16Bit signed
    */
@@ -74,8 +88,9 @@ export class MovementSensor extends Sensor {
   }
 
   /**
+   * Puts together the configuration value for the movement service.
    *
-   * @returns {ArrayBuffer} 2Bytes
+   * @returns {ArrayBuffer} configuration value 2Bytes
    */
   public getConfigurationValue(): ArrayBuffer {
     /* Bit  Usage
@@ -100,12 +115,24 @@ export class MovementSensor extends Sensor {
     return configMovement.buffer;
   }
 
-  private static sensorMpu9250GyroConvert(data: number): number {
-    return data / (65536 / 500);
+  /**
+   * Convert the gyroscope raw value to °/s.
+   *
+   * @param {number} rawValue
+   * @returns {number} °/s
+   */
+  private static sensorMpu9250GyroConvert(rawValue: number): number {
+    return rawValue / (65536 / 500);
   }
 
-  private static sensorMpu9250AccConvert(data: number): number {
-    return data / (32768 / (Math.pow(2, MovementSensor._accelerometerRange + 1)));
+  /**
+   * Convert the accelerometer raw value to G.
+   *
+   * @param {number} rawValue
+   * @returns {number} G
+   */
+  private static sensorMpu9250AccConvert(rawValue: number): number {
+    return rawValue / (32768 / (Math.pow(2, MovementSensor._accelerometerRange + 1)));
   }
 
 }

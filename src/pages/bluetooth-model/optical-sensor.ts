@@ -22,8 +22,9 @@ export class OpticalSensor extends Sensor {
   }
 
   /**
+   * The configuration value is 0x01 -> enable measurement.
    *
-   * @returns {ArrayBuffer} 1Byte
+   * @returns {ArrayBuffer} configuration value 1Byte
    */
   public getConfigurationValue(): ArrayBuffer {
     return new Uint8Array([0x01]).buffer; //0x01 = enable barometer
@@ -42,6 +43,12 @@ export class OpticalSensor extends Sensor {
 
   }
 
+  /**
+   * Converts the raw illuminance value to Lux.
+   *
+   * @param {number} rawData
+   * @returns {number} lx
+   */
   private static sensorOpt3001Convert(rawData: number) {
     let m = rawData & 0x0FFF;
     let e = (rawData & 0xF000) >> 12;
@@ -51,6 +58,5 @@ export class OpticalSensor extends Sensor {
 
     return m * (0.01 * e);
   }
-
 
 }

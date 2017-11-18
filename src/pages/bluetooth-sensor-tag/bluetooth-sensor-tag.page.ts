@@ -56,14 +56,36 @@ export class BluetoothSensorTagPage {
     )
   }
 
+  /**
+   * On connection established with the ble device.
+   *
+   * @param peripheralObject
+   */
   private onConnected(peripheralObject: any) {
     this.status = 'connection established';
 
+    // activate notification for all sensor services
     this.subscribeToServices();
+
+    // enable sensors to start measurement
     this.enableSensors();
 
   }
 
+  /**
+   * Shows that the current ble device disconnected.
+   *
+   * @param peripheralObject
+   */
+  private onDisconnected(peripheralObject: any) {
+    let message = 'device disconnected';
+    this.status = message;
+    this.showToast(message)
+  }
+
+  /**
+   * Stars the notification service for all sensors.
+   */
   private subscribeToServices() {
     // movement sensor
     this.ble.startNotification(this.device.id, this.movementSensor.serviceUUID, this.movementSensor.dataUUID)
@@ -107,9 +129,11 @@ export class BluetoothSensorTagPage {
         error => this.onError(error)
       );
 
-
   }
 
+  /**
+   * Enables all sensors to start the measurement.
+   */
   private enableSensors() {
 
     // movement sensor
@@ -121,6 +145,8 @@ export class BluetoothSensorTagPage {
     this.ble.write(this.device.id, this.barometerSensor.serviceUUID,
       this.barometerSensor.configurationUUID, this.barometerSensor.getConfigurationValue())
       .catch(error => this.onError(error));
+
+    //keys - don't have to be enabled
 
     // temperature sensor
     this.ble.write(this.device.id, this.temperatureSensor.serviceUUID,
@@ -139,6 +165,11 @@ export class BluetoothSensorTagPage {
 
   }
 
+  /**
+   * Update the status and show a toast on error.
+   *
+   * @param error
+   */
   private onError(error: any) {
     this.ngZone.run(() => {
       this.status = 'Error' + error;
@@ -191,14 +222,8 @@ export class BluetoothSensorTagPage {
     });
   }
 
-  private onDisconnected(peripheralObject: any) {
-    let message = 'device disconnected';
-    this.status = message;
-    this.showToast(message)
-  }
-
   /**
-   * Disconnect the device.
+   * Disconnect the device on leaving page.
    */
   ionViewWillLeave() {
     this.ble.disconnect(this.device.id).catch(
@@ -206,6 +231,11 @@ export class BluetoothSensorTagPage {
     )
   }
 
+  /**
+   * Shows the given message with a toast.
+   *
+   * @param {string} message
+   */
   private showToast(message: string) {
     let toast = this.toastCtrl.create({
       message: message,

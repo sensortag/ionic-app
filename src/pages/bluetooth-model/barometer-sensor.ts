@@ -27,8 +27,9 @@ export class BarometerSensor extends Sensor {
   }
 
   /**
+   * The configuration value is 0x01 -> enable measurement.
    *
-   * @returns {ArrayBuffer} 1Byte
+   * @returns {ArrayBuffer} configuration value 1Byte
    */
   public getConfigurationValue(): ArrayBuffer {
     return new Uint8Array([0x01]).buffer; //0x01 = enable barometer
@@ -51,6 +52,12 @@ export class BarometerSensor extends Sensor {
     this.pressure = BarometerSensor.sensorBmp280Convert(rawData[3] | (rawData[4] << 8) | (rawData[5] << 16));
   }
 
+  /**
+   * Converts the raw pressure value and temperature value.
+   *
+   * @param {number} rawValue
+   * @returns {number} converted value
+   */
   private static sensorBmp280Convert(rawValue: number): number {
     return rawValue / 100;
   }

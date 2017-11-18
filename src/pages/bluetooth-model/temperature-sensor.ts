@@ -44,13 +44,20 @@ export class TemperatureSensor extends Sensor {
   }
 
   /**
+   * The configuration value is 0x01 -> enable measurement.
    *
-   * @returns {ArrayBuffer}
+   * @returns {ArrayBuffer} configuration value 1Byte
    */
   getConfigurationValue(): ArrayBuffer {
     return new Uint8Array([0x01]).buffer; //0x01 = enable
   }
 
+  /**
+   * Converts the raw temperature data to ℃.
+   *
+   * @param {number} data
+   * @returns {number} ℃
+   */
   private static convertTemperature(data: number): number {
     return (data >> 2) * this.SCALE_LSB;
   }

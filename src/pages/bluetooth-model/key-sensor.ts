@@ -9,7 +9,6 @@ export class KeySensor extends Sensor {
   private rightKey: boolean = false;
   private reedRelay: boolean = false;
 
-
   constructor() {
     super(
       '0000ffe0-0000-1000-8000-00805f9b34fb',
@@ -29,6 +28,7 @@ export class KeySensor extends Sensor {
   }
 
   /**
+   * Converts the key data.
    *
    * @param data 1 Byte
    */

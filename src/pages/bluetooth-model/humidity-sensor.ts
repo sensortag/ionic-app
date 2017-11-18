@@ -27,8 +27,9 @@ export class HumiditySensor extends Sensor {
   }
 
   /**
+   * The configuration value is 0x01 -> enable measurement.
    *
-   * @returns {ArrayBuffer} 1Byte
+   * @returns {ArrayBuffer} configuration value 1Byte
    */
   public getConfigurationValue(): ArrayBuffer {
     return new Uint8Array([0x01]).buffer; //0x01 = enable barometer
@@ -50,10 +51,22 @@ export class HumiditySensor extends Sensor {
     this.humidity = HumiditySensor.sensorHdc1000ConvertHumidity(rawData[1]);
   }
 
+  /**
+   * Converts the raw temperature value to ℃.
+   *
+   * @param {number} rawTemperature
+   * @returns {number} ℃
+   */
   private static sensorHdc1000ConvertTemperature(rawTemperature: number): number {
     return (rawTemperature / 65536) * 165 - 40;
   }
 
+  /**
+   * Converts the raw humidity value to %RH.
+   *
+   * @param {number} rawHumidity
+   * @returns {number} %RH
+   */
   private static sensorHdc1000ConvertHumidity(rawHumidity: number): number {
     rawHumidity &= ~0x0003; // remove status bits
     return (rawHumidity / 65536) * 100;

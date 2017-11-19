@@ -14,7 +14,7 @@ describe('barometer-sensor', () => {
     expect(config[0]).toBe(0x01);
   });
 
-  it('should convert the temperature', () => {
+  it('should convert the temperature and pressure', () => {
     let tempData = new Uint32Array(1);
     tempData[0] = 2450; //24.50 ℃
 

@@ -10,8 +10,8 @@ export class KeySensor extends Sensor {
 
   constructor() {
     super(
-      '0000ffe0-0000-1000-8000-00805f9b34fb',
-      '0000ffe1-0000-1000-8000-00805f9b34fb',
+      'ffe0',
+      'ffe1',
       '',
       ''
     );

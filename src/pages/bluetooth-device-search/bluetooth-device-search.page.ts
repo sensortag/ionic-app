@@ -17,7 +17,7 @@ import {BleScanService} from "../../services/ble-scan.service";
 export class BluetoothDeviceSearchPage {
   private isFilterOn: boolean = false;
 
-  private deviceName: string = 'CC2650 SensorTag';
+  private deviceName: string = 'SensorTag';
   private toastTime: number = 4000; // time in ms
   private status: string;
   private devices: Array<BluetoothDevice> = [];
@@ -62,7 +62,7 @@ export class BluetoothDeviceSearchPage {
    * @param {BluetoothDevice} device
    */
   private onDeviceFound(device: BluetoothDevice) {
-    if (!this.isFilterOn || (device.name === this.deviceName)) {
+    if (!this.isFilterOn || (device.name.toLowerCase().includes(this.deviceName.toLowerCase()))) {
       this.ngZone.run(() => this.devices.push(device));
     }
   }

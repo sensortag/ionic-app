@@ -13,7 +13,7 @@ import {SettingKeys, SettingsService} from "../../services/settings.service";
 import {IonicStorageModule} from "@ionic/storage";
 import {BleScanService} from "../../services/ble-scan.service";
 import {Observable} from "rxjs/Observable";
-import {BluetoothDevice} from "../../pages/model/bluetooth/bluetooth-device";
+import {BluetoothDevice} from "../../model/bluetooth/bluetooth-device";
 import {SettingsServiceMock} from "../mocks/settings-service-mock";
 
 describe('BluetoothDeviceSearchPage', () => {

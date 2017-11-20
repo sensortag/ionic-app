@@ -3,7 +3,7 @@ import {HTTP, HTTPResponse} from "@ionic-native/http";
 import {Diagnostic} from '@ionic-native/diagnostic';
 import {SettingKeys, SettingsService} from "../../services/settings.service";
 import {IonicPage, Loading, LoadingController, Platform, ToastController} from "ionic-angular";
-import {KeyModel} from "../model/key-model";
+import {KeyModel} from "../../model/key-model";
 
 
 /**

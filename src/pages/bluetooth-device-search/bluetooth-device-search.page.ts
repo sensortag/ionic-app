@@ -1,6 +1,6 @@
 import {Component, NgZone} from '@angular/core';
 import {IonicPage, NavController, ToastController} from 'ionic-angular';
-import {BluetoothDevice} from "../model/bluetooth/bluetooth-device";
+import {BluetoothDevice} from "../../model/bluetooth/bluetooth-device";
 import {SettingKeys, SettingsService} from "../../services/settings.service";
 import {BleScanService} from "../../services/ble-scan.service";
 

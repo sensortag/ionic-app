@@ -1,4 +1,4 @@
-import {MovementSensor} from "../../pages/model/bluetooth/movment-sensor";
+import {MovementSensor} from "../../model/bluetooth/movment-sensor";
 
 describe('movement-sensor', () => {
   let movementSensor: MovementSensor;

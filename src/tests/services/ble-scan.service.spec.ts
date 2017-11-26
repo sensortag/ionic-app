@@ -10,10 +10,10 @@ import {Observable} from "rxjs/Observable";
 import {BluetoothDevice} from "../../model/bluetooth/bluetooth-device";
 
 describe('BLE scan service', () => {
-  let ble : BLE;
+  let ble: BLE;
   let bleScanService: BleScanService;
-  let diagnostic : Diagnostic;
-  let platform : Platform;
+  let diagnostic: Diagnostic;
+  let platform: Platform;
 
   beforeEach(async(() => {
 
@@ -137,7 +137,7 @@ describe('BLE scan service', () => {
     let scanningTime = 0.5; //s
     bleScanService.scanningTime = scanningTime;
 
-    let deviceReceived : boolean;
+    let deviceReceived: boolean;
 
     bleScanService.startScanningForBleDevices().subscribe(
       device => {
@@ -196,15 +196,16 @@ describe('BLE scan service', () => {
     let scanningTime = 0.5; //s
     bleScanService.scanningTime = scanningTime;
 
-    let deviceReceived : boolean;
+    let deviceReceived: boolean;
     bleScanService.startScanningForBleDevices().subscribe(
       device => {
         expect(device).toEqual(bluetoothDevice);
         deviceReceived = true;
 
       },
-      error => { },
-      ()=> {
+      error => {
+      },
+      () => {
         expect(platform.is).toHaveBeenCalledWith('ios');
         expect(ble.isEnabled).toHaveBeenCalled();
         expect(ble.scan).toHaveBeenCalledWith([], scanningTime);

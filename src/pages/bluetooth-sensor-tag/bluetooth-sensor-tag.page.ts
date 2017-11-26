@@ -1,6 +1,6 @@
 import {Component, NgZone} from "@angular/core";
 import {BLE} from "@ionic-native/ble";
-import {IonicPage, NavController, NavParams, ToastController} from "ionic-angular";
+import {IonicPage, NavParams, ToastController} from "ionic-angular";
 import {BluetoothDevice} from "../../model/bluetooth/bluetooth-device";
 import {MovementSensor} from "../../model/bluetooth/movment-sensor";
 import {BarometerSensor} from "../../model/bluetooth/barometer-sensor";

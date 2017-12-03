@@ -5,8 +5,7 @@ import {SettingKeys, SettingsService} from "../../services/settings.service";
 import {BleScanService} from "../../services/ble-scan.service";
 
 /**
- * Page to scan for bluetooth devices.
- * Only devices with the name 'CC2650 SensorTag' are listed.
+ * Page to scan for bluetooth-low-energy devices.
  *
  */
 @IonicPage()
